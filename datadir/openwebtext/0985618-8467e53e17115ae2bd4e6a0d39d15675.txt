@@ -1,0 +1,27 @@
+Emily Lakdawalla • January 20, 2016
+
+Theoretical evidence for an undiscovered super-Earth at the edge of our solar system
+
+We still don't know for sure if it's out there, but it's looking likelier that there is an undiscovered planet orbiting beyond the Kuiper belt. If it's there, it's big, far, and slow. It would be roughly 10 times the mass of Earth (or about half the mass of Neptune), likely never gets closer to the Sun than about 100 200 AU, and takes more than 10,000 years to orbit the Sun. The presence of such a planet would explain two odd clusters of Kuiper belt orbits, including distant detached objects Sedna and 2012 VP113, and the perpendicularly tilted ones of several newly discovered small worlds.
+
+The potential ninth planet is described in a paper written by Konstantin Batygin and Mike Brown that provides a theoretical explanation for how such a distant planet could perturb the Kuiper belt object orbits into their present shapes, sizes, and orientations. You can read a preprint of the Batygin and Brown paper here, and an excellent Caltech press release about the Batygin and Brown work here. The two have also launched a blog, findplanetnine, in which they're chronicling their efforts to search for this undiscovered object. Batygin and Brown explain what they're proposing:
+
+Please accept marketing-cookies to watch this video.
+
+And here's a diagram of the orbits of the things that figure into this work, with "Planet 9" in orange and the orbits of the much smaller worlds that it dominates in magenta and cyan:
+
+Caltech/R. Hurt (IPAC) [Diagram was created using WorldWide Telescope.] Possible orbit of a perturbing "ninth planet" The six most distant known objects in the solar system with orbits exclusively beyond Neptune (magenta), including Sedna (dark magenta), all mysteriously line up in a single direction. Also, when viewed in three dimensions, they tilt nearly identically away from the plane of the solar system. Another population of Kuiper belt objects (cyan) are forced into orbits that are perpendicular to the plane of the solar system and clustered in orientation. Batygin and Brown show that a planet with 10 times the mass of the earth in a distant eccentric orbit (orange) anti-aligned with the magenta orbits and perpendicular to the cyan orbits is required to maintain this configuration. The six most distant known objects in the solar system with orbits exclusively beyond Neptune (magenta), including Sedna (dark magenta), all mysteriously line up in a single direction. Also, when viewed in three dimensions, they tilt nearly identically away from the plane of the solar system. Another population of Kuiper belt objects (cyan) are forced into orbits that are perpendicular to the plane of the solar system and clustered in orientation. Batygin and Brown show that a planet with 10 times the mass of the earth in a distant eccentric orbit (orange) anti-aligned with the magenta orbits and perpendicular to the cyan orbits is required to maintain this configuration.
+
+A lurking, distant planet is not a new idea, of course, but the last time I reported on this work ("A second Sedna! What does it mean?"), theorists were still scratching their heads over how an undiscovered planet could cause the arguments of perihelion of distant detached objects line up. The best thing about the paper, in my opinion, is that it makes very specific predictions about where the large object should be, and also about where there should be lots of other smaller worlds, providing guidance for future surveys. Brown and Batygin are looking for the object with Subaru, but the search could take five years, and if it's out there, someone else could find it first.
+
+Since the paper was the subject of an embargo, there are lots of excellent articles out there featuring interviews of the authors as well as other observational astronomers, like Chad Trujillo and Scott Sheppard, and dynamics theorists, like Hal Levison and Alessandro Morbidelli. I couldn't possibly do better than all of these, so here's a list of good articles and who they interviewed, in no particular order:
+
+I did read the paper, and one thing in the discussion caught my eye: the work does not explain the "Kuiper cliff," the lack of objects with orbit semimajor axes between 50 and 70 AU. It would be very nice (from an aesthetic standpoint, anyway) if the same planet could also be blamed for those apparently missing worlds. But it can't, at least not yet:
+
+Another curious feature of the distant scattered disk is the lack of objects with perihelion distance in the range q = 50–70 AU. It is yet unclear if this property of the observational sample can be accounted for by invoking a distant eccentric perturber such as the one discussed herein. Indeed, answering these questions comprises an important avenue toward further characterization of our model.
+
+Future work, as always, is needed.
+
+Emily Lakdawalla Senior Editor and Planetary Evangelist for The Planetary Society
+
+Read more articles by Emily Lakdawalla

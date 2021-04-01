@@ -1,0 +1,39 @@
+GC logs are vital artifacts for troubleshooting memory/CPU problems and optimizing application performance. In September 2017, the much-awaited Java 9 was released. In Java 9, GC logging has been re-implemented using the Unified GC logging framework (JEP 271). Some changes are surprising, and some changes might be shocking.
+
+Here are the changes made to GC logging in Java 9:
+
+Three popular GC logging system properties have been deprecated. 43 GC logging system properties have been removed (Note: It’s ‘removed’ and not ‘deprecated’). GC log formatting has changed.
+
+This article walks you through the steps that you need to follow when migrating the applications to Java 9.
+
+Deprecated GC Logging Properties
+
+Most Java applications use these three GC logging system properties:
+
+-XX:+PrintGC
+
+-XX:+PrintGCDetails
+
+-Xloggc:<gc-log-file-path>
+
+These three system properties are deprecated in Java 9; they will be removed in upcoming Java releases. It’s advised to replace these system properties with the newly introduced system properties in Java 9.
+
+Here are the old systems property equivalents in Java 9.
+
+Until Java 8 Java 9 -XX:+PrintGCDetails -Xloggc:<gc-log-file-path> -Xlog:gc*:file=<gc-log-file-path> -XX:+PrintGC -Xloggc:<gc-log-file-path> -Xlog:gc:file=<gc-log-file-path>
+
+GC Logging System Properties Removed
+
+First, it’s a surprise to several of us that Java has removed GC logging system properties. Yes, they are removed, not even deprecated. The JVM will not start if you are passing old system properties. Thus, you are forced to replace these system properties in Java 9. This table summarizes the old system properties and their equivalents in Java 9.
+
+GC Log Format Change
+
+The Java GC log format has been migrated to the Unified JVM Logging framework in Java 9. Thus, GC logs will start to look different from earlier versions. Say you are using G1 GC. Below is how the GC log format would have looked in Java 8:
+
+In Java 9, the GC log will start to look like below:
+
+You can see additional information such as relative time (i.e. ‘[2.799s]’), log level (i.e. trace, debug, info), and GC event number (i.e. GC(0)) printed in Java 9's GC log format. Those were prevented in Java 8. Besides the new additions, there are also changes in the certain events as well.
+
+This format change is applicable to all GC algorithms as well (i.e. Serial, CMS, Parallel, Shenandoah) and not just G1 GC. So, if you are using any custom scripts/tools to analyze GC logs, those scripts/tools will need to be enhanced to support this new format.
+
+To analyze new Java 9 GC log you may consider using free tools such as GCeasy tool, HP Jmeter, etc. These tools parse the new unified GC logging formats and generate reliable reports.

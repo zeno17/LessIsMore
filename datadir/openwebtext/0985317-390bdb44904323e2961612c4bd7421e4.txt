@@ -1,0 +1,33 @@
+Analysis Why does Bitcoin work? Fraudsters should have left it in cinders years ago, and might have done, if it wasn’t for two things: spam and the Byzantine Empire.
+
+A Bitcoin is basically an entry in a ledger that is distributed across a network of computers. Bitcoins are transferred between parties by noting the transaction in the ledger. This might sound just like any other banking system except there’s a crucial difference: no one is in charge of the ledger.
+
+It’s held across a network of computers and anyone can add their computer to the network when they wish - or leave when they wish. This may seem crazy, and an easy way for fraudsters to join the network and get their computer to update the ledger to give themselves new Bitcoins.
+
+In 1997, a British cryptographer called Adam Back proposed an anti-spam approach called Hashcash. The basic idea was to make an email message contain proof that a computationally difficult problem, specific to the contents of the message, had been solved. Any email that didn’t contain this proof would be discarded by the recipient’s email server.
+
+Ordinary users of email wouldn’t be inconvenienced because the amount of work for one email message would be tolerable, but spammers would be deterred because it would add up to a huge amount of money, in the form of the huge electricity bill run up by all the computers they’d need to buy to solve the mathematical problems.
+
+In the end it didn’t work out as an anti-spam technique partly because spammers today use botnets, which are vast armies of hijacked computers. But the idea behind Hashcash was picked up and used for Bitcoin.
+
+Coining it ... how does Bitcoin stack up against national currencies?
+
+The nitty-gritty detail of the crypto-currency
+
+The basic idea behind Bitcoin is that blocks of transactions are chained together, each new block of transactions referring to the previous one. A block is validated by having a value computed for it that matches the hash signature of the block, with the difficulty of the matching calibrated automatically by the network. As members of the network get faster (using faster computers or entirely new generations of hardware engineered specifically for the task), the computation gets more difficult. It is designed to always take about ten minutes to match the hash.
+
+A block cannot be altered without once again performing the computation and adding the proof-of-work to it. But crucially, this must then also be repeated for the block that was chained to it (since the proof of work for that block now will not match). It is a little like trying to alter a company’s accounts from a few years back: the balance sheet and profit-and-loss statements won’t tally forward properly, so each subsequent year will have to be changed too.
+
+Stopping the fraudsters in their tracks
+
+Historian William Lecky wrote in 1869 of the Byzantine Empire: “The universal verdict of history is that it constitutes, without a single exception, the most thoroughly base and despicable form that civilization has yet assumed.” Harsh, certainly. Byzantine has become a byword for treachery – and it is the basis for a classic problem in computer science: the Byzantine Generals Problem.
+
+This challenge involves working out how to reach a valid consensus among a set of military generals when some of them are traitors and will send fraudulent messages. This is exactly the problem Bitcoins must face on the internet. The solution to the problem is voting. The Bitcoin network maintains the integrity of its ledger by the loyal members collectively outvoting traitors.
+
+If a traitor computer tries to alter a transaction (undoing a payment to take back the money, for example) then it must also alter the transactions in blocks that came after. But because of the Hashcash approach this is computationally challenging and painfully slow, and by the time it has done this more blocks will have been chained by the rest of the network.
+
+Thus, it is futile for a fraudster to compete with the rest of the Bitcoin network unless he can outpace it.
+
+The wretched hive of scum and villainy on the internet generally cannot nobble the currency: even if they amassed a huge botnet of a million hijacked Windows machines it would be unlikely to exceed 6TH/s (trillion hash operations per second) yet the Bitcoin network is currently running at 58TH/s. Furthermore the performance of the Bitcoin network is set to grow quickly as dedicated chips (ASICs in other words) in Bitcoin mining rigs push PCs into obsolescence – and these rigs do not run Windows. There remains a risk that a well-funded organization (perhaps governmental) could amass the dedicated computing power required to swamp the Bitcoin network.
+
+Defending against this risk is one of the motivations of engineers such as Yifu Guo at Avalon to get ASICs widely adopted.

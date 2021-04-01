@@ -1,0 +1,25 @@
+(CNN) -- If you wasted too many hours of workplace productivity playing Google's Pac-Man tribute, you'd better call in sick for this one.
+
+To promote Namco-Bandai, the creators of the arcade classic, an Australian firm has created what it's calling the World's Biggest Pac-Man game.
+
+And it's letting users make it even bigger.
+
+Soap Creative, which designed the official Pac-Man website, rolled out the online game last week. Since then, players have gobbled up nearly 270 million dots and sacrificed the life of video-game history's hungriest golden orb more than 1.4 million times.
+
+Maybe more impressively? Fans have helped created more than 12,600 interlocking mazes. Players can play on multiple mazes in a single game. The exits that let you zoom to the other side of a maze in the original version of the game transport you to the next maze in this one.
+
+"It has been labeled 'an internet hit,' the world's biggest waste of time and time-wasting brilliance," the massive game's creatorswrote on their website. "All of which we are happy about."
+
+The project grew out of a collaboration between Namco and Microsoft Australia, and uses HTML5, the emerging tool for building web applications (and the latest version of HTML, the most popular coding language).
+
+Some of the user-created levels mimic the style of Pac-Man's original mazes. But many others add a new dash of creativity.
+
+A glance at the game's main page shows mazes whose walls form images of robots, mushrooms, a yin-yang symbol and what appear to be several self-portraits.
+
+Other mazes celebrate video-game classics like Sonic the Hedgehog, Mario Brothers and Space Invaders.
+
+Of course, this being the internet, not all images are as creative, or in good taste.
+
+The company says its constantly scanning new mazes for inappropriate images, including an anatomical favorite of juvenile minds everywhere.
+
+"We're happy that the 'penis to non-penis levels' ratio is well below 1:100 (the standard for user generated campaigns) ...," the company wrote on its blog. "We've been watching the moderation closely, so every penis has a short life."

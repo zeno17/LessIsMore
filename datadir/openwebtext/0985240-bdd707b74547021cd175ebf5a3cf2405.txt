@@ -1,0 +1,23 @@
+Dauntless Profile Joined May 2010 Norway 548 Posts Last Edited: 2011-05-02 00:05:41 #1 There were previously no way (at least for EU players) to practice for the upcoming patch changes.
+
+
+
+Therefore I've created patch 1.3.3 PTR versions of every 1v1 ladder map (except for Delta Quadrant) and published them to EU.
+
+
+
+They are named "Map Name - Patch 1.3.3 PTR - By Dauntless".
+
+Easiest found by searching for "Dauntless", "PTR" or "Patch", since searching for "1.3.3" doesn't work.
+
+
+
+Feel free to republish to other regions, but remember to publish the .mod file.
+
+
+
+The reason I didn't upload Delta'Quadrant, was because I've used up 9 publish slots on the ladder maps and the last one on the .mod file, so I had to choose one map to not upload. And since DQ is disliked by almost everyone, I chose that one.
+
+
+
+Edit: Forgot to mention. The art for the Pylon power radius is the exact same as before. It just looks like the radius isn't changed, but it really is. Dauntless.156 EU || Liquid´HerO | Grubby.Grubby

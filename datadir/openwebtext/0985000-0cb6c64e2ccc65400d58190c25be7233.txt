@@ -1,0 +1,49 @@
+Some feminists recently declared war on Wikipedia. According to them, Wikipedia is a too male. From its male editors to its ascetically “very masculine” design, the site strikes these feminists as wholly uninviting to women.
+
+This is a typical feminist mantra. Feminists find a space with a large male population and then declare that space sexist. The more popular the space, the more sexist it must be. The absence of an equal female presence could not possibly result from women and girls’ conscious choices. No, it must be a deliberate attempt by men and boys to exclude the opposite sex.
+
+While there have been some instances of women being kept out of communities, the level of conspiracy required to make the above exclusion possible would be so vast that no one in those communities would have any time to do anything but keep women out.
+
+Yet what feminists ignore is that there are plenty of women in those communities already, and they have a much different story to tell. Susan Sons wrote an article describing her experiences in the evil bastion of misogyny that is the programming community:
+
+[…] As a little girl from farm country who’d repeatedly been excluded from intellectual activities because she wasn’t wealthy or urban or old enough to be wanted, I could not believe how readily I’d been accepted and treated like anybody else in the channel, even though I’d been outed. I was doubly floored when I found out that coder0 was none other than Eric S. Raymond, whose writings I’d devoured shortly after discovering Linux. Open source was my refuge because it was a place were nobody cared what my pedigree was or what I looked like—they cared only about what I did. I ingratiated myself to people who could help me learn by doing dull scutwork: triaging issues to keep the issue queues neat and orderly, writing documentation and fixing code comments. I was the helpful kid, so when I needed help, the community was there. I’d never met another programmer in real life at this point, but I knew more about programming than some college students.
+
+Wait. That cannot be right. That does not sound like the unwelcoming “brogrammer locker-room type of environment” feminists rail against. It sounds like these men, many of whom were much older than Sons at the time, let her in without a problem.
+
+So what is the deal? Why is it that so few women are involved in programming? Sons offers an answer:
+
+Twelve-year-old girls today don’t generally get to have the experiences that I did. Parents are warned to keep kids off the computer lest they get lured away by child molesters or worse—become fat! That goes doubly for girls, who then grow up to be liberal arts majors. Then, in their late teens or early twenties, someone who feels the gender skew in technology communities is a problem drags them to a LUG meeting or an IRC channel. Shockingly, this doesn’t turn the young women into hackers. Why does anyone, anywhere, think this will work? Start with a young woman who’s already formed her identity. Dump her in a situation that operates on different social scripts than she’s accustomed to, full of people talking about a subject she doesn’t yet understand. Then tell her the community is hostile toward women and therefore doesn’t have enough of them, all while showing her off like a prize poodle so you can feel good about recruiting a female. This is a recipe for failure.
+
+That should be obvious. Most people involved in niche activities began them as children. Even when they discover something as adults, that thing is likely similar to their childhood interests. Someone who develops a love for Android coding probably already had an interest in technology. Someone who develops an interest in video games or comics likely already liked similar mediums. It is incredibly unlikely that a college graduate will suddenly want to code for Wikipedia when they had no interest in tech for most of their lives.
+
+Yet that does not fit well in the feminist narrative. Feminists want and need women to be oppressed, and the idea that women consciously choose not to program does not help that agenda. It needs to be a conspiracy, and in needing to fuel that theory feminists ironically create the unbalanced dynamic they claim they want to get rid of. As Sons notes:
+
+I’ve also come to realize that I have an advantage that female newcomers don’t: I was here before the sexism moral panic started. When a dozen guys decide to drink and hack in someone’s hotel room, I get invited. They’ve known me for years, so I’m safe. New women, regardless of competence, don’t get invited unless I’m along. That’s a sexual harassment accusation waiting to happen, and no one will risk having 12 men alone with a single woman and booze. So the new ladies get left out.
+
+That little taste of reality seems to go over feminists heads, so it is worth repeating: because of the fear of sexual harassment accusations, some men will not risk being alone with women they do not know well.
+
+I would love to say the fear is unwarranted, but when we have women saying things like this:
+
+“The ideas of freedom and openness can be used to dismiss concerns and rationalize the gender gap as a matter of preference and choice. That is, ‘if there are no women in our project, it must simply be their choice.’ Women may have made a choice, but it was not based on whether they find the project interesting or have a contribution to make, but by the ‘brogrammer’ locker-room type of environment.”
+
+it makes sense for men to be careful. It simply is not a good idea for men to hang out with women in certain communities.
+
+Sons mentions that many hackers are socially inept. They may not realize they crossed someone’s boundaries. The proper way to address that is to speak up if someone does something that bothers you and explain why it bothered you so that it will not happen again. As Sons says, “This is what adults do, and it works. Adults don’t look for ways to take offense, silently hand out ‘creeper cards’ or expect anyone to read their minds. I’m not a child, I’m an adult, and I act like one.”
+
+Too bad there are not many feminists willing to act like adults.
+
+Sons goes on to state that as a society we do not encourage girls to discover how things work. As a result, fewer girls show interest in tech industries than boys. Of course, that does not mean that if we put those things in front of girls they will flock to them. Many girls will simply have no interest in them, and that is fine. There is nothing wrong with that. There is, however, something wrong with not offering it as an option for the girls who are interested.
+
+Likewise, there is something wrong with shaming men and boys for their interests. Sons writes:
+
+Do not punish the men simply for being here. “Male privilege” is a way to say “you are guilty because you don’t have boobs, feel ashamed, even if you did nothing wrong”, and I’ve wasted too much of my time trying to defend good guys from it. Yes, some people are jerks. Call them out as jerks, and don’t blame everyone with the same anatomy for their behavior. Lumping good guys in with bad doesn’t help anyone, it just makes good guys afraid to interact with women because they feel like they can’t win. I’m tired of expending time and energy to protect good men from this drama. Do not punish hackers for non-hackers’ shortcomings. It is not my fault some people don’t read man pages, nor is it my job to hold their hand step-by-step so they don’t have to. It is not my place to drag grown women in chains to LUG meetings and attempt to brainwash them to make you more comfortable with the gender ratio, and doing so wouldn’t work anyway.
+
+Feminists and liberals need to stop thinking in terms of gender ratios. You cannot control people’s interests like that. Sometimes women will show interest in something more than men, and vice versa. It is not a conspiracy; it is simply human nature. I love to read books, but I can barely get my youngest brother to read a menu. It is not a conspiracy against 20-sometimes. He simply prefers to watch movies and videos rather than read.
+
+The same preferencing holds true for boys and girls. Boys may naturally go for tech while girls may naturally go for social media. There is nothing wrong with that. It is simply their preference.
+
+While it is a worthy cause to make sure that everyone has equal access to anything that might interest them, it is shameful to create that access by taking away someone’s safe space. As Sons mentions:
+
+Most of all, I’m disappointed. I had a haven, a place where no one cared what I looked like, what my body was like or about any ephemera—they cared about what I could do—and this culture shift has robbed me of my haven. At least I had that haven. The girls who follow me missed out on it.
+
+That is the irony of feminists’ efforts. They are creating the very environment they claim they want to get rid of.

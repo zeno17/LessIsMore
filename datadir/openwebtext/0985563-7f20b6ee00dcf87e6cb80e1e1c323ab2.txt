@@ -1,0 +1,247 @@
+The PlanetSide 2 Public Test Server will come down this evening for an update.
+
+Happy Five Years of PlanetSide 2!
+
+On November 20, PlanetSide 2 celebrates its fifth anniversary as the world’s most massively multiplayer online first person shooter. From launch to now, our players have played for more than 211,215,456 hours combined, that’s 24,111 years’ worth of combat on the vast, battle-scarred planet of Auraxis.
+
+To commemorate the occasion, any player can redeem the code “5YearsPS2” in the Depot and receive a free fifth anniversary decal! Double Experience will also be running from Nov. 17 to Nov. 24. (Members will receive quadruple experience on Friday, Nov. 24, as it overlaps with the Member’s double experience weekend!)
+
+And as always, we’ve put together a commemorative anniversary bundle for you as well, complete with unique goodies you won’t find elsewhere. This year we’re offering three anniversary bundles, each with different price points.
+
+Initiate’s Five-Year Anniversary Bundle 2999 DBC and contains…
+
+5th Anniversary Horn (All Vehicles)
+
+5 Years Anniversary Decals (All Factions, Armor and Vehicle)
+
+AF-4A Bandit AE (Carbine, NC)
+
+LC2 Lynx AE (Carbine, TR)
+
+Zenith VX-5AE (Carbine, VS)
+
+Guerrilla’s Goldhex Camo (NC)
+
+Tactician’s Goldhex Camo (TR)
+
+Worshiper’s Goldhex Camo (VS)
+
+5 Years Anniversary Decals (All Factions, Armor and Vehicle)
+
+AF-4A Bandit AE (Carbine, NC)
+
+LC2 Lynx AE (Carbine, TR)
+
+Zenith VX-5AE (Carbine, VS)
+
+Guerrilla’s Goldhex Camo (NC)
+
+Tactician’s Goldhex Camo (TR)
+
+Worshiper’s Goldhex Camo (VS)
+
+Soldier’s Five-Year Anniversary Bundle for 3999 DBC and contains…
+
+5th Anniversary Horn (All Vehicles)
+
+5 Years Anniversary Decals (All Factions, Armor and Vehicle)
+
+AF-4A Bandit AE (Carbine, NC)
+
+LC2 Lynx AE (Carbine, TR)
+
+Zenith VX-5AE (Carbine, VS)
+
+Guerrilla’s Goldhex Camo (NC)
+
+Tactician’s Goldhex Camo (TR)
+
+Worshiper’s Goldhex Camo (VS)
+
+Superiority/Liberty/Enlightenment Decals (All Factions, Armor and Vehicle)
+
+AF-18 Stalker AE (Auto-Scout Rifle, NC)
+
+SOAS-20 AE (Auto-Scout Rifle, TR)
+
+Artemis VX26 (Auto-Scout Rifle, VS)
+
+NS Stalwart Helmet (All Factions)
+
+Lightning Obsidian Trim (All Factions)
+
+1x 6 Month Heroic Boost (Unlocks for the character that purchases the bundle, only.)
+
+Commander’s Five-Year Anniversary Bundle for 8999 DBC and contains…
+
+5th Anniversary Horn (All Vehicles)
+
+5 Years Anniversary Decals (All Factions, Armor and Vehicle)
+
+AF-4A Bandit AE (Carbine, NC)
+
+LC2 Lynx AE (Carbine, TR)
+
+Zenith VX-5AE (Carbine, VS)
+
+Guerrilla’s Goldhex Camo (NC)
+
+Tactician’s Goldhex Camo (TR)
+
+Worshiper’s Goldhex Camo (VS)
+
+Superiority/Liberty/Enlightenment Decals (All Factions, Armor and Vehicle)
+
+AF-18 Stalker AE (Auto-Scout Rifle, NC)
+
+SOAS-20 AE (Auto-Scout Rifle, TR)
+
+Artemis VX26 (Auto-Scout Rifle, VS)
+
+NS Stalwart Helmet (All Factions)
+
+Lightning Obsidian Trim (All Factions)
+
+Vanguard Obsidian Trim (NC)
+
+Prowler Obsidian Trim (TR)
+
+1x 12 Month Heroic Boost (Unlocks for the character that purchases the bundle, only.)
+
+1x Counter-Intelligence Implant (Unlocks for the character that purchases the bundle, only.)
+
+1x Minor Cloak (Unlocks for the character that purchases the bundle, only.)
+
+1x Infravision (Unlocks for the character that purchases the bundle, only.)
+
+9x Basic Implant Packs (Unlocks for the character that purchases the bundle, only.)
+
+Stoic Goldhex Camo (All Factions)
+
+Warbringer Title (All Factions)
+
+UI and QoL Improvements
+
+Generator timers no longer overlay the icon on the HUD.
+
+Sound effects have been added to the nano-cycler.
+
+The nano-cycler now lets you filter implants by owned and unowned.
+
+Alert timers now only appear on the HUD and TAB menu when you’re on a continent with an active alert.
+
+You can now select the World Map view from the map dropdown.
+
+ISO-4 is now tracked on the minimap, TAB screen, and loadout screens.
+
+Quick Deploy will now disable if there is more than 60% allied population in the region.
+
+Capture Points that cannot be captured are shown on the HUD and minimap with padlocks over them.
+
+Clicking a boost slot from the loadout window will take you to the boost window.
+
+Region population is now displayed on an expanded minimap.
+
+You can click on usernames in the most recent line of chat.
+
+The chat window will no longer disappear when the textfield has focus.
+
+When capturing or defending a base, the faction who owns the base will always appear on the left side, and the attacking faction will appear on the right side.
+
+Meta
+
+Sunderers can no longer deploy in the no-deploy region of allied bases.
+
+The 1000m squad beacon respawn limitation has been removed.
+
+Weapon Additions
+
+The first drop of new empire specific weaponry has arrived on the public test server. These SMGs all have unique visual styles, audio, but are still a work in progress. They will not be released with Monday's anniversary patch as we still need time to collect feedback from the community and continue to polish the look and feel.
+
+MGR-S1 Gladius – New Conglomerate SMG
+
+Originally designed for members of the ruthless Nomad mercenaries, this low rate of fire close quarters weapon harbors the elusive 200 damage model and high default damage per magazine.
+
+MG-S1 Jackal – Terran Republic SMG
+
+Trident arsenal’s precision manufactured armaments are reserved for Terran Republic soldiers in the upper echelons of rank and experience. The Jackal carries a 30 round magazine with quick reloads and a hard hitting 167 damage model.
+
+VE-S Canis – Vanu Sovereignty SMG
+
+This experimental close quarters weapon is the product of years of research and experimentation with Vanu artifacts. The Canis’ rate of fire starts slow, and increases over time, making use of a large magazine and 167 damage model.
+
+Vehicle Adjustments
+
+Dalton (Liberator)
+
+Damage from 1000 to 1500
+
+Dev Note: These adjustments keep ESF as one hit to burning (with the paired resistance adjustment,) while reducing the shots to kill against most other targets. MBT goes from 5 to 4 hits to kill; Sunderer and Liberator go from 7 to 5 hits to kill; Galaxy goes from 10 to 7 hits to kill; Lightning goes from 4 to 3 hits to kill; ANT goes from 6 to 4 hits to kill; and Harasser goes from 3 to 2 hits to kill.
+
+Zephyr (Liberator)
+
+Damage from 350 to 500
+
+Cone of Fire max from 0.75 to 0.5
+
+Velocity from 200 to 250
+
+Recoil recovery rate from 0.175 to 20
+
+Dev Note: Zephyr is receiving a slight handling increase to make it more competitive in an anti-vehicle setting. The damage adjustment (pair with the A2G resistance buff,) keeps ESF at the same 4 shots to kill as it did prior to the update. Hits to kill versus MBT go from 15 to 10; Galaxy from 27 to 19; Valkyrie from 6 to 4; Liberator and Sunderer from 20 to 14; ANT from 16 to 11; and Harasser from 6 to 5 hits to kill.
+
+Duster (Liberator)
+
+Cone of Fire max from 6 to 3.5
+
+Cone of Fire min from 2 to 1.5
+
+Cone of Fire bloom from 2 to 0.5
+
+Dev Note: A cone of fire adjustment allows the Duster to make use of its rapid fire and magazine size with a bit more freedom. Previously, the most effective way to use the Duster was to use it like a Zephyr in singular or paired shots. This change helps move it more toward its intended function.
+
+Tankbuster (Liberator)
+
+Max damage per pellet from 175 to 250
+
+Dev Note: Alongside the ESF chaingun resistance adjustment below, this brings shots to kill versus ESF from 35 to 18. Against heavily armored targets, the number of reloads required to kill typically drops from 3 to 2.
+
+ESF
+
+Resistance 23 (Air to Ground Warhead) from -140 to -75
+
+Dev Note: This decreases the damage of each shot from an A2G warhead weapon, like the Zephyr, Dalton, or Hornet Missiles, but Zephyr and Dalton have had their damage buffed to counter-balance the buff, while Hornets go from 3 hits to kill to 4 hits to kill.
+
+Resist type 28 (AP Chaingun) from 75 to 65
+
+Dev Note: This reduces the staying power ESF have primarily against a Liberator's Shredder, but also affects the Tank Buster, the Valkyrie's Hellion, and other vulcan-like weapons.
+
+Gatekeeper (Prowler/Harasser)
+
+Prowler Cone of Fire max from 0.3 to 0.25
+
+Harasser Cone of Fire max from 0.5 to 0.4
+
+Dev Note: Tightening up the maximum cone of fire pushes out the effective range for this weapon.
+
+Mjolnir (Vanguard/Harasser)
+
+Direct damage from 80 to 100
+
+Dev Note: This moves Mjolnir to the front of the pack in terms of damage output among the close range anti-vehicle weapons, against most vehicles, and helps close the gap on the vulcan in harasser versus harasser combat.
+
+Spear Phalanx Turret
+
+Direct damage from 500 to 600
+
+Inner blast damage from 250 to 300
+
+Infantry Adjustments
+
+AV MANA Turret (Engineer)
+
+Resistance from 23 (Air to Ground Warhead) to 34 (Infantry Rocket Launcher)
+
+Dev Note: AV MANA Turret was somewhat left behind during the original CAI update. This resistance type adjustment bumps up the damage, bringing it closer to being in line with infantry rocket launchers, and creating a better trade-off for Engineers making use of the turret.
+
+Misc. Changes and Fixes

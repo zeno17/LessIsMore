@@ -1,0 +1,55 @@
+If you’ve been on Facebook recently, you’ve probably seen a post of an infographic that was published in a local daily about electronic pick-pocketing. The infographic suggests that criminals can use smartphones and other NFC-enabled devices to steal card information, at times, without you even knowing it. Then, they can use that information to make transactions “without authorisation” as well as “clone cards”.
+
+Well, we did some digging and here are 5 reasons why that’s simply untrue.
+
+First, let’s get you up to speed. Here’s the infographic we’re talking about.
+
+And here’s a video where an “expert” demonstrates how this technology works.
+
+Now, this is why it’s not true.
+
+1. The information stolen from your cards via NFC is not enough
+
+We gave the application demonstrated in the video a try and, for the sake of this article, beeped one of our own cards to see just what kind of information the app was able to glean. What we got were the card number, the card’s expiry date and the card’s transaction history.
+
+That’s not enough information to make an online transaction because you will need the CVV2 number at the back of the card too. Further, contactless payment terminals like Visa’s Paywave have the same level of security as EMV chip cards which generate one-time only authentication codes for each transaction. Visa has even issued a statement in December of last year that there hasn’t been any incidents of data theft involving Paywave technology.
+
+2. The app needs to practically touch your card before it can steal information
+
+NFC stands for Near-Field Communication with the keyword being Near. On Visa’s website, that’s a distance of 4cm from your card to the reader before it will be triggered. When an NFC-enabled device or terminal needs to get that close to your card to collect any information, the odds are it won’t happen without your knowledge unless you’re being intentionally reckless or negligent.
+
+We also tried to use the application earlier to scan cards within our wallets (to see if you really needed to wrap your cards in aluminium foil) and it didn’t work. Only after we removed the card from our wallet did the app manage to scan it. So no, no aluminium foil necessary.
+
+Finally, if someone were to get that much access to your card, they’re probably better off just taking photos of the front and back of your card so that they get enough information to carry out online transactions instead.
+
+3. EMV Chip ‘n’ Pay cards are very difficult to clone and use
+
+An article published by Wired highlights that since the introduction the new Chip ‘n’ Pay PIN cards (that’s the one we’re using now), card fraud has dropped dramatically due to the two-stage authentication required to make in-store purchases.
+
+These cards also have their information stored on the chip (not embossed in a magnetic strip) and generate a one-time authentication code each time you make a purchase. This makes the card very hard to clone and, even if people manage to do that, makes it very hard to use at a store.
+
+You’re probably far more vulnerable to attacks online as criminals can hack your accounts, like we’ve seen happen to Uber riders, where you have your billing and payment information saved.
+
+4. Online transactions in Malaysia requires a TAC number
+
+According to Bank Negara, online transactions in Malaysia all require a Transaction Authorisation Code (TAC) number that has to be sent to your mobile phone before the transaction can be approved.
+
+This means that not only will you be notified of the transaction — should it happen — but you can also deny the transaction and report this unauthorised transactions directly to your bank.
+
+5. Card issues have Zero Liability Policies
+
+If all else fails and your cards do get cloned/stolen/hacked, major card issuers like Visa and MasterCard have Zero Liability Policies for the use of their cards. This means that if you notice any unauthorised transactions on your final statement, you can make a report to your bank and have those transactions corrected quickly.
+
+Just make sure you meet their required criteria (Visa, MasterCard) and you should be good to go.
+
+Don’t believe us? Even Bank Negara has issued a statement debunking the infographic
+
+Yep. Even they are tired of this misinformation being circulated. Here’s their full statement on the bank’s Facebook page:
+
+
+
+Click to enlarge
+
+What do you guys think of this? Let me know in the comments below.
+
+If you want a detailed breakdown on how Paywave works, our sister site TheSkop has all the info you need.

@@ -1,0 +1,17 @@
+March 18, 2011 at 10:59 Tags Python , Version control
+
+The official CPython core development team has finally switched from Subversion to Mercurial, after years of planning. This is very good news for both core developers and casual contributors.
+
+Working with Subversion when you can't commit changes is very frustrating, because you're basically without source control. For experienced developers accustomed to having a VCS to protect them at all times, this is hard to get used to. Personally, before I became a core Python developer I was using my own Mercurial clone to work on patches locally before submitting them to the Issue tracker.
+
+Now, everyone interested contributing to Python can clone the repository and do his work locally, committing changes to his heart's wishes and enjoying all the benefits of source control. I think this makes the contribution process easier and has a chance to attract more contributors to the project, which would be great. Not to mention that Mercurial is IMHO a better and more powerful VCS than Subversion in general.
+
+Core developers also benefit from the power of Mercurial vs. Subversion, especially when working on non-trivial patches that take longer than a couple of hours to develop. These changes can be managed either by commits to a local repo (with a collapse of all commits to a single one before pushing), or using the mq extension (which is recommended by the new developer guide).
+
+The full local repo is also a blessing in at least two other use cases:
+
+Perusing the repo logs and diffing old revisions is now almost instant, since the whole repo is local - this is an important time-saver when doing some archaeological research on the code-base (which has to be done quite often in complex long-running projects). You have all the history and can commit changes even when offline.
+
+Mercurial manages these repositories in a highly space-efficient manner. On my Ubuntu machine, a Mercurial repo of py3k (the latest development revision) with the executables and docs built is only 50% larger than the corresponding Subversion working directory. Not much of an overhead for having the full project history locally. Mercurial's local clones use hard links, so having multiple clones of the same repo locally is almost free in terms of disk space.
+
+Moving to Mercurial is also a kind-of dogfooding for Python, since Mercurial is one of the best known pure-Python projects. Being written in Python means that it's very easy to develop plugins and custom extensions for Mercurial. In fact, the Python core devs have already implemented a few useful plugins - for example one that sends automatic messages to the issue tracker once a commit is made that mentions some issue. This is very useful for "done, committed in revision XXX" notes on the tracker, which one used to have to remember adding, and now are done automatically.

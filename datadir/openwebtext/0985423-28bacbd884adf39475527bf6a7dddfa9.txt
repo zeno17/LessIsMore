@@ -1,0 +1,159 @@
+Editor's note: we've fully updated this post since its initial publication in 2015. The static e-commerce integration shown below is much more efficient and powerful for developers. We've also crafted a video tutorial on Jekyll that you can find right here. Enjoy!
+
+The first time we dived into the JAMstack & static site generators was with the awesome Middleman. Our in-depth integration with the Ruby site generator has been one of our most popular posts. Since we've received a lot of positive feedback on it, we thought we'd continue to explore site generators on the blog.
+
+As we mentioned in our previous post, static website development is becoming a developer's favorite: it's cheap, fast, simple and effective. With the right tools, it's also quite functional, even for clients. And all of that, of course, without getting lost in templates or having to install and update a CMS. With the Middleman integration, we proved that by using our HTML/JS-based shopping cart, developers can successfully handle the e-commerce aspect of a static site. So let's prove it again, shall we?
+
+Today, I'll show you how to integrate our shopping cart to your static site using Jekyll.
+
+We created a GitHub repository where you can find all the code for this post.
+
+What's Jekyll?
+
+Jekyll is GitHub co-founder Tom Preston-Werner's popular Ruby open source program. It prompts developers to:
+
+Transform your plain text into static websites and blogs.
+
+As a static site generator, it's perfect for creating simple business and personal websites and blogs. It's content-focused, stripping the website development process from unnecessary hassles. Jekyll allows you to use Markdown (or Textile), Liquid, HTML & CSS to code your static site.
+
+Many Snipcart enthusiast developers have already expressed their interest in Jekyll, so we're glad to dive into the subject today.
+
+Installing and bootstrapping Jekyll for your e-commerce site
+
+Before going any further in this demo, make sure you have Jekyll installed. Open a command prompt and type:
+
+gem install jekyll
+
+The first step will be to create a new Jekyll site. They make it easy to start a new site with a nice command line interface.
+
+jekyll new snipcart-jekyll-demo
+
+You can use any site name you want, in our case we will use snipcart-jekyll-demo .
+
+Creating the data for your store's products
+
+Okay, let's start by creating a collection for our products.
+
+First, go into your _config.yml file and add a field named collections containing the name of your collection. For our example, we will use the name products .
+
+collections: - products
+
+Now that your collection is registered in the config, you want to actually create it with tangible content. In your directory, create a new folder following the format: _yourcollection
+
+For us, the folder will be named: _products
+
+This folder is where the entities that belong to the collection will be added. Let's pretend we are selling books here. We will create 3 products for our demo store.
+
+Here's how one of them would look:
+
+--- name: How Google Works price: 20.99 slug: how-google-works sku: HGW image: http://d.gr-assets.com/books/1422538855l/23158207.jpg layout: productdetails --- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper ante non vehicula eleifend. Phasellus ut feugiat tellus, vitae malesuada mi. Sed placerat ultrices enim, id fermentum ante tincidunt nec. Nulla ut mi bibendum, sodales ex ut, tempor odio. Mauris finibus elit eget ornare efficitur. Fusce a mauris vitae lorem.
+
+FYI, I took the images on the excellent site Goodreads.
+
+Creating your "head" template
+
+Before adding any buy buttons on our Jekyll store, we need to add snipcart.js and snipcart.css files. Open the head.html file. Then open your Snipcart dashboard and go to Account > Credentials to get the markup you need to add.
+
+My head.html file now looks like the following one:
+
+<head> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1"> <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title> <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}"> <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> {% for script in layout.head %} {% include {{ script }} %} {% endfor %} <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous"> <link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" rel="stylesheet" type="text/css" /> </head>
+
+As you can see, we conditionally render scripts specified in the current layout by evaluating the layout.head .
+
+This allows us to only import scripts that are necessary to specific pages, reducing the global load time. We will show further down how we include Snipcart to the site this way.
+
+Displaying Snipcart products on your site
+
+For the demo, we will display our products directly on the index page.
+
+To do so, open the index.html file in your favorite text editor.
+
+Replace the content of this file by the following lines:
+
+--- layout: products title: Store --- {% for product in site.products %} {% include product.html %} {% endfor %}
+
+The for loop iterates trough the products collection available by Jekyll's site variable and renders every entity of it within a product.html template. The content that will come out will be placed within the layout specified in the Front Matter of the current document.
+
+What we need to create now are both the layout and the template required to render this page.
+
+We'll pass the product variable to the template located in the _includes folder.
+
+Here's the code for our example:
+
+<div class="product"> <a class="product" href="{{ site.baseurl }}{{ product.url }}"> <img src="{{ product.image }}" alt="{{ product.name }}" class="thumbnail"/> <p>{{ product.name }}</p> </a> <button class="snipcart-add-item" data-item-name="{{ product.name }}" data-item-id="{{ product.sku }}" data-item-image="{{ product.image }}" data-item-url="{{ site.baseurl }}" data-item-price="{{ product.price }}"> Buy it for {{ product.price }} $ </button> </div>
+
+The layout will be fairly simple. It will serve as a wrapper to the page content, and will include the script needed for Snipcart to work.
+
+Here's what it looks like:
+
+--- layout: default head: snipcart.html --- <div class="products"> {{ content }} </div>
+
+Like discussed previously, the head: snipcart.html is how we specifically include Snipcart's JavaScript for this layout. The default head.html will see that there is a head attribute declared in this layout and will include that file if it exists in the _includes folder.
+
+Here's the snipcart.html in the _includes folder:
+
+<script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js" data-api-key="{{ site.api_key }}" id="snipcart"> </script> <link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" rel="stylesheet" type="text/css" />
+
+Last thing to do in order to make this work is to add the api_key variable to your _config.yml . We don't hardcore the key directly in the declaration, so we keep our configuration variables together.
+
+Testing the site
+
+Okay, our basic site is now ready to be tested. Run the following command in your terminal:
+
+jekyll serve
+
+By default, it uses the 4000 port. So if you hit http://localhost:4000 in your browser, it should work Note that you will not be able to do a complete checkout as you are in local, and Snipcart will not be able to validate prices. But once deployed, it will work like a charm!
+
+Pushing the shopping experience a bit further
+
+I really fell in love with Jekyll while crafting this tutorial, so I decided to mess around a little bit more to see what it had to offer.
+
+To be more specific, I wanted to try the automatic rendering of a collection in independent files.
+
+To achieve this, I added a variable to my collection to make it so:
+
+collections: products: output: true
+
+By default, if the output is set to true, Jekyll will render every single entity responding to the path format:
+
+/:baseurl/:collection/:entity.html
+
+What we want to render now is a different view from the one we previously did. With the same logic as before, we will create a new layout for our entities to use. We will call it productdetails and will declare it as follow:
+
+--- layout: default head: snipcart.html --- <div class="product-details"> <img src="{{ page.image }}" alt="{{ page.name }}" class="thumbnail"/> <div class="product-description"> <p>{{ page.name }}</p> <p> {{ page.content }} </p> <button class="snipcart-add-item" data-item-name="{{ page.name }}" data-item-id="{{ page.sku }}" data-item-image="{{ page.image }}" data-item-url="{{ site.baseurl }}" data-item-price="{{ page.price }}"> Buy it for {{ page.price }} $ </button> </div> </div>
+
+The {{ page.content }} is everything declared after the Front Matter. If you scroll up to the Creating the data for your store's products, you will see the content section as the lorem ipsum chunk.
+
+Deploying your static e-commerce Jekyll site
+
+To deploy our site, we will use GitHub Pages. First of all, you need to create a repository. Ours is at https://github.com/snipcart/snipcart-jekyll. The code used for the blog post is all in it (we're assuming you know how to use Git and GitHub here). So you basically just need to push your code to your new repository.
+
+We had to do a small tweak; we needed to edit the baseurl settings in our _config.yml file as we are using a Project GitHub page.
+
+Our demo site is accessible at http://snipcart.github.io/snipcart-jekyll-integration, so in my _config.yml file I typed this:
+
+baseurl: "/snipcart-jekyll-integration"
+
+To make it available in GitHub Pages, you need to create a branch named gh-pages .
+
+git checkout -b gh-pages
+
+Then just push this branch to your repository.
+
+git push origin gh-pages
+
+Our Snipcart-powered Jekyll shop is now up and running! It's a basic site, sure, but it hints at very interesting possibilities for mixing static web development with effective e-commerce.
+
+Notice these comments and product reviews? These are generated by Staticman, a cool open source tool for user-generated content on static sites. Full tutorial here.
+
+You could also use Netlify to host your modern static site, an awesome tool created by talented developers.
+
+Video tutorial
+
+Conclusion
+
+Integrating Snipcart on a static site for this demo took me an hour tops. Jekyll was at least as easy to use as Middleman, the first static site generator we integrated Snipcart with. And deployment on GitHub Pages was smooth, frictionless and fast. Once again, it's clear that static tools get along pretty well with our HTML/JS-based shopping cart.
+
+Read this post to learn more about content management & multilingual support for Jekyll.
+
+If you think of any other static site generators that could be a good fit with Snipcart, feel free to let us know in the comments. We'll actively consider any suggestions from the community. And if you've found this post useful, go ahead and share it on Twitter.

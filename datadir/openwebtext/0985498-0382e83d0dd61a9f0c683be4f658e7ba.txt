@@ -1,0 +1,15 @@
+An update to BattleTech has dramatically changed the way evasion works in the game. Alongside several other changes to the single-player Skirmish beta, the Evasion, Sensor Lock, and Evasive Move mechanics have “all received major revisions.”
+
+Check out our list of the best multiplayer games on PC.
+
+In a forum post, social media and community manager Robin Gitelman details some highlights of the update. The largest of these is to the the way evasion works in the game, which has been substantially changed. This is something that Jordan Weisman, the CEO of developers Harebrained Schemes, talked about in a recent interview we did with him.
+
+Weisman tells us that due to the tabletop version of BattleTech being such a complex game, his team are attempting to make the digital version more accessible, especially as it’s reaching a new audience. Evasion, however, is an example of “where we actually made it a little more complicated than the tabletop,” Weisman says.
+
+“In the tabletop [version], there’s a hit modifier based on how much you move. Now we’ve embraced that and expanded on it, so the faster you move the more evasion pips you get,” Weisman explains. “These are little chevrons that show up on the side of the mech’s HUD element. Those chevrons can be whittled down with each attack.” The idea, then, is to encourage players of BattleTech’s digital version to move more hexes in order to receive a boost to defence, which remains constant for that round.
+
+Weisman says that they “wanted to recognise that the more shots you take on that mech you’re ranging it down.” In simpler terms, this means the more times you hit a target, the less evasive it becomes, and you become more likely to be able to hit that target in the future. Weisman gives the example of using lower-damage units, who will be able to hit your target, even if they won’t be able to do significant damage to it, which will allow higher-damage units a better chance of scoring a hit later in the round.
+
+Weisman adds that “this is something that was done in response to early beta feedback,” and that today’s update is the result of the team reflecting on that, with “this evasion mechanic [being] one of the major things in response to that feedback.”
+
+Other changes made in the update affect the moral system, increasing the frequency and intensity of critical strikes, and some tuning to weapon balance. There’ll also be changes to AI, and a secret multiplayer beta test, although the latter might not go live with the rest of the update. You can read the entire patch highlights in the forum post, linked above.

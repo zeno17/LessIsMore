@@ -1,0 +1,63 @@
+I see way too many C programmers that hate C++. It took me quite some time (years) to slowly understand what is good and what is bad about it. I think the best way to phrase it is this:
+
+Less code, no run-time overhead, more safety.
+
+The less code we write, the better. This quickly becomes clear in all engineers that strive for excellence. You fix a bug in one place, not many - you express an algorithm once, and re-use it in many places, etc. Greeks even have a saying, traced back to the ancient Spartans: "to say something in less words, means that you are wise about it". And the fact of the matter, is that when used correctly, C++ allows you to express yourself in far less code than C, without costing runtime speed, while being more safe (i.e. catching more errors at compile-time) than C is.
+
+Here's a simplified example from my renderer: When interpolating pixel values across a triangle's scanline. I have to start from an X coordinate x1, and reach an X coordinate x2 (from the left to the right side of a triangle). And across each step, across each pixel I pass over, I have to interpolate values.
+
+When I interpolate the ambient light that reaches the pixel:
+
+typedef struct tagPixelDataAmbient { int x; float ambientLight; } PixelDataAmbient; ... // inner loop currentPixel.ambientLight += dv;
+
+When I interpolate the color (called "Gouraud" shading, where the "red", "green" and "blue" fields are interpolated by a step value at each pixel):
+
+typedef struct tagPixelDataGouraud { int x; float red; float green; float blue; // The RGB color interpolated per pixel } PixelDataGouraud; ... // inner loop currentPixel.red += dred; currentPixel.green += dgreen; currentPixel.blue += dblue;
+
+When I render in "Phong" shading, I no longer interpolate an intensity (ambientLight) or a color (red/green/blue) - I interpolate a normal vector (nx, ny, nz) and at each step, I have to re-calculate the lighting equation, based on the interpolated normal vector:
+
+typedef struct tagPixelDataPhong { int x; float nX; float nY; float nZ; // The normal vector interpolated per pixel } PixelDataPhong; ... // inner loop currentPixel.nX += dx; currentPixel.nY += dy; currentPixel.nZ += dz;
+
+Now, the first instinct of C programmers would be "heck, write three functions that interpolate the values, and call them depending on the set mode". First of all, this means that I have a type problem - what do I work with? Are my pixels PixelDataAmbient? PixelDataGouraud? PixelDataPhong? Oh, wait, the efficient C programmer says, use a union!
+
+typedef union tagSuperPixel { PixelDataAmbient a; PixelDataGouraud g; PixelDataPhong p; } SuperPixel;
+
+..and then, you have a function...
+
+RasterizeTriangleScanline( enum mode, // { ambient, gouraud, phong } SuperPixel left, SuperPixel right) { int i,j; if (mode == ambient) { // handle pixels as ambient... int steps = right.a.x - left.a.x; float dv = (right.a.ambientLight - left.a.ambientLight)/steps; float currentIntensity = left.a.ambientLight; for (i=left.a.x; i<right.a.x; i++) { WorkOnPixelAmbient(i, dv); currentIntensity+=dv; } } else if (mode == gouraud) { // handle pixels as gouraud... int steps = right.g.x - left.g.x; float dred = (right.g.red - left.g.red)/steps; float dgreen = (right.g.green - left.a.green)/steps; float dblue = (right.g.blue - left.g.blue)/steps; float currentRed = left.g.red; float currentGreen = left.g.green; float currentBlue = left.g.blue; for (j=left.g.x; i<right.g.x; j++) { WorkOnPixelGouraud(j, currentRed, currentBlue, currentGreen); currentRed+=dred; currentGreen+=dgreen; currentBlue+=dblue; } ...
+
+Do you feel the chaos slipping in?
+
+First of all, one typo is all that is needed to crash my code, since the compiler will never stop me in the "Gouraud" section of the function, to actually access the ".a." (ambient) values. A bug not caught by the C type system (that is, during compilation), means a bug that manifests at run-time, and will require debugging. Did you notice that I am accessing left.a.green in the calculation of "dgreen"? The compiler surely didn't tell you so.
+
+Then, there is repetition everywhere - the for loop is there for as many times as there are rendering modes, we keep doing "right minus left divided by steps". Ugly, and error-prone. Did you notice I compare using "i" in the Gouraud loop, when I should have used "j"? The compiler is again, silent.
+
+What about the if/else/ ladder for the modes? What if I add a new rendering mode, in three weeks? Will I remember to handle the new mode in all the "if mode==" in all my code?
+
+Now compare the above ugliness, with this set of C++ structs and a template function:
+
+struct CommonPixelData { int x; }; struct AmbientPixelData : CommonPixelData { float ambientLight; }; struct GouraudPixelData : CommonPixelData { float red; float green; float blue; // The RGB color interpolated per pixel }; struct PhongPixelData : CommonPixelData { float nX; float nY; float nZ; // The normal vector interpolated per pixel }; template <class PixelData> RasterizeTriangleScanline( PixelData left, PixelData right) { PixelData interpolated = left; PixelData step = right; step -= left; step /= int(right.x - left.x); // divide by pixel span for(int i=left.x; i<right.x; i++) { WorkOnPixel<PixelData>(interpolated); interpolated += step; } }
+
+Now look at this. We no longer make a union type-soup: we have specific types per each mode. They re-use their common stuff (the "x" field) by inheriting from a base class ( CommonPixelData ). And the template makes the compiler CREATE (that is, code-generate) the three different functions we would have written ourselves in C, but at the same time, being very strict about the types!
+
+Our loop in the template cannot goof and access invalid fields - the compiler will bark if we do.
+
+The template performs the common work (the loop, increasing by "step" in each time), and can do so in a manner that simply CAN'T cause runtime errors. The interpolation per type ( AmbientPixelData , GouraudPixelData , PhongPixelData ) is done with the operator+=() that we will add in the structs - which basically dictate how each type is interpolated.
+
+And do you see what we did with WorkOnPixel<T>? We want to do different work per type? We simply call a template specialization:
+
+void WorkOnPixel<AmbientPixelData>(AmbientPixelData& p) { // use the p.ambientLight field } void WorkOnPixel<GouraudPixelData>(GouraudPixelData& p) { // use the p.red/green/blue fields }
+
+That is - the function to call, is decided based on the type. At compile-time!
+
+To rephrase it again:
+
+we minimize the code (via the template), re-using common parts, we don't use ugly hacks, we keep a strict type system, so that the compiler can check us at all times. and best of all: none of what we did has ANY runtime impact. This code will run JUST as fast as the equivalent C code - in fact, if the C code was using function pointers to call the various WorkOnPixel versions, the C++ code will be FASTER than C, because the compiler will inline the type-specific WorkOnPixel template specialization call!
+
+Less code, no run-time overhead, more safety.
+
+Does this mean that C++ is the be-all and end-all of languages? Of course not. You still have to measure trade-offs. Ignorant people will use C++ when they should have written a Bash/Perl/Python script. Trigger-happy C++ newbies will create deep nested classes with virtual multiple inheritance before you can stop them and send them packing. They will use complex Boost meta-programming before realizing that this is not necessary. They will STILL use char* , strcmp and macros, instead of std::string and templates.
+
+But this says nothing more than... watch who you work with. There is no language to shield you from incompetent users (no, not even Java).
+
+Keep studying and using C++ - just don't overdesign.

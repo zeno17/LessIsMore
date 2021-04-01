@@ -1,0 +1,333 @@
+Written for python-mode.el by Andreas Roehler on 2014-11-28
+
+- Support for large output
+
+new commands py-fast-process, py-fast-...
+
+Fixes: large output makes Emacs freeze, lp:1253907
+
+Python code now might be processed by an
+
+- interactive Python shell (DEFAULT)
+
+- non-interactive Python (`py-fast- process- p', if large output)
+
+Both processes might run in
+
+- session, i.e. start from possible previous state (DEFAULT)
+
+- dedicated, (`py-dedicated- process- p', run in separate process)
+
+- TAB bound to `py-indent- or-complete' , completes at EOL.
+
+Calls to `tab-to-tab-stop' removed, as these would conflict.
+
+Use `C-q TAB' to insert a literally TAB-character.
+
+- py-fast-complete
+
+Complete word before point, if any, use `py-fast-process'
+
+- `py-shell- complete- or-indent'
+
+In shell: complete or indent depending on the context.
+
+If cursor is at current-indentation and further indent
+
+seems reasonable, indent. Otherwise try to complete.
+
+- Python specific hide-show
+
+py-hide-region
+
+py-show-region
+
+py-hide-statement
+
+py-show-statement
+
+py-hide-block
+
+py-show-block
+
+py-hide-clause
+
+py-show-clause
+
+py-hide- block-or- clause
+
+py-show- block-or- clause
+
+py-hide-def
+
+py-show-def
+
+py-hide-class
+
+py-show-class
+
+py-hide- expression
+
+py-show- expression
+
+py-hide- partial- expression
+
+py-show- partial- expression
+
+py-hide-line
+
+py-show-line
+
+py-hide-top-level
+
+py-show-top-level
+
+- `py-shell' uses new `py-shell-mode', `py-shell-mode-map'
+
+M-x describe-mode RET mentions edit available commands
+
+Menu "Py-Shell"
+
+- Improved customization of Python2, Python3, IPython executables
+
+receive defaults depending from system
+
+py-python-command - defaults to python2
+
+py-python2- command
+
+py-python3- command
+
+py-ipython- command
+
+py-python- command- args
+
+py-python2- command- args
+
+py-python3- command- args
+
+py-ipython- command- args
+
+- info-lookup-symbol made working with Python
+
+patched python-info.el available at
+
+https:/ /bitbucket. org/andreas_ roehler/ pydoc-info
+
+See also INSTALL-INFO-FILES
+
+- `py-backward- same-level'
+
+While `py-up' will go upward from beginning of block, this travels
+
+same level, but goes up if no element left in level. If callled
+
+from inside a string or list, go to its beginning.
+
+- `py-kill- shell-unconditi onal'
+
+With optional argument SHELL, otherwise kill default
+
+(I)Python shell.
+
+- py-info- lookup- symbol ()
+
+Calls `info-lookup- symbol' . Sends help if stuff is missing.
+
+- py-toggle- split-window- function
+
+If window is splitted vertically or horizontally.
+
+Sets customizable variable
+
+`py-split- window- on-execute- function'
+
+Also in menu Python/ Customize/ Switches/ Display/ Which split windows
+
+- py-symbol-at-point
+
+Return the Python symbol under cursor
+
+- py-report- comint- variable- setting
+
+Display Py-shell' comint-mode variables of interest.
+
+- variables-state
+
+Diplays state of python-mode variables in an org-mode buffer
+
+- py-kill- buffer- unconditional
+
+Kill buffer unconditional; kill also any buffer-process.
+
+Setting docstring style simplified; a style is all needed.
+
+New commands
+
+-py-set- nil-docstring- style
+
+-py-set- pep-257- nn-docstring- style
+
+-py-set- pep-257- docstring- style
+
+-py-set- django- docstring- style
+
+-py-set- symmetric- docstring- style
+
+-py-set- onetwo- docstring- style
+
+- new indent feature/behavior, lp:1280982
+
+If an empty line was dedented deliberatly, this is
+
+honored by next lines indent
+
+- py-object- reference- face
+
+commonly "self" or "cls", inherits default face
+
+- py-error
+
+In case of error, list messages from Python process
+
+- `py-split- windows- on-execute- p' renamed `py-split- window- on-execute'
+
+Not a boolean any more, new option 'just-two: When code is send to
+
+interpreter, split screen into source-code buffer and current
+
+--maybe reused-- py-shell. When set to `t' --default--, python-mode
+
+will keep existing windows and split only if needed. Alternatively
+
+if a multitude of python- shells/ buffers should be visible, open them
+
+manually and set `py-keep- windows- configuration' to `t'.
+
+If `always' split according to settings of `split- height- threshold' , `split- width-threshold '; with `t' keep just two windows
+
+- For completeness some commands user might expect
+
+py-execute- statement- dedicated
+
+py-execute- block-dedicated
+
+py-execute- clause- dedicated
+
+py-execute- block-or- clause- dedicated
+
+py-execute- def-dedicated
+
+py-execute- class-dedicated
+
+py-execute- region- dedicated
+
+py-execute- buffer- dedicated
+
+py-execute- expression- dedicated
+
+py-execute- partial- expression- dedicated
+
+py-execute- line-dedicated
+
+py-execute- top-level- dedicated
+
+- `py-unload- python- el'
+
+Normally commands delivered by python.el are usable alongside with
+
+python-mode.el. Some old version of python.el might write skeletons into
+
+python- mode-abbrev- table, which is removed that way.
+
+Internally used functions preferably are prefixed `py--':
+
+py--statement -opens- block-p
+
+py--statement -opens- clause- p ...
+
+New variable `py-ipython- command' - (PATH-TO)-IPython
+
+Boolean `py-set- fill-column- p' renamed `py-auto-fill-mode'
+
+Fill according to `py-docstring- fill-column' and
+
+`py-comment- fill-column'
+
+`py-font- lock-keywords' renamed `python- font-lock- keywords' ,
+
+lp:1314921
+
+New booleans
+
+- py-fast-process-p
+
+If `t', stuff is executed through `py-fast-...'-
+
+commands, suitable for large output. Result arrives
+
+in py-fast- output- buffer, which is not in comint-mode
+
+- py-shell- manage- windows- p
+
+If `t', open output buffers, split windows according to settings of
+
+`py-split- window- on-execute' and `py-switch- buffers- on-execute- p'.
+
+Removed commands
+
+-toggle- py-nil- docstring- style
+
+-py-nil- docstring- style-on
+
+-py-nil- docstring- style-off
+
+-toggle- py-onetwo- docstring- style
+
+-py-onetwo- docstring- style-on
+
+-py-onetwo- docstring- style-off
+
+-toggle- py-pep- 257-docstring- style
+
+-py-pep- 257-docstring- style-on
+
+-py-pep- 257-docstring- style-off
+
+-toggle- py-pep- 257-nn- docstring- style
+
+-py-pep- 257-nn- docstring- style-on
+
+-py-pep- 257-nn- docstring- style-off
+
+-toggle- py-symmetric- docstring- style
+
+-py-symmetric- docstring- style-on
+
+-py-symmetric- docstring- style-off
+
+-toggle- py-django- docstring- style
+
+-py-django- docstring- style-on
+
+-py-django- docstring- style-off
+
+Some commands not so useful made common functions, like
+
+-py-statement- opens-block- p
+
+-py-statement- opens-clause- p ...
+
+Dropped booleans:
+
+`py-start- run-py- shell',
+
+`py-start- run-ipython- shell',
+
+`py-pylint- offer-current- p'
+
+`py-paragraph- fill-docstring- p'
+
+`py-enforce- output- buffer- p'
+
+`py-cleanup- temporary' , as redundant WRT `py-debug-p'

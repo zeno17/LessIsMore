@@ -1,0 +1,13 @@
+UK Government Promoting Backdoor-Enabled Voice Encryption Protocol
+
+The UK government is pushing something called the MIKEY-SAKKE protocol to secure voice. Basically, it's an identity-based system that necessarily requires a trusted key-distribution center. So key escrow is inherently built in, and there's no perfect forward secrecy. The only reasonable explanation for designing a protocol with these properties is third-party eavesdropping.
+
+Steven Murdoch has explained the details. The upshot:
+
+The design of MIKEY-SAKKE is motivated by the desire to allow undetectable and unauditable mass surveillance, which may be a requirement in exceptional scenarios such as within government departments processing classified information. However, in the vast majority of cases the properties that MIKEY-SAKKE offers are actively harmful for security. It creates a vulnerable single point of failure, which would require huge effort, skill and cost to secure ­ requiring resource beyond the capability of most companies. Better options for voice encryption exist today, though they are not perfect either. In particular, more work is needed on providing scalable and usable protection against man-in-the-middle attacks, and protection of metadata for contact discovery and calls. More broadly, designers of protocols and systems need to appreciate the ethical consequences of their actions in terms of the political and power structures which naturally follow from their use. MIKEY-SAKKE is the latest example to raise questions over the policy of many governments, including the UK, to put intelligence agencies in charge of protecting companies and individuals from spying, given the conflict of interest it creates.
+
+And GCHQ previously rejected a more secure standard, MIKEY-IBAKE, because it didn't allow undetectable spying.
+
+Both the NSA and GCHQ repeatedly choose surveillance over security. We need to reject that decision.
+
+Posted on January 22, 2016 at 2:23 PM • 16 Comments

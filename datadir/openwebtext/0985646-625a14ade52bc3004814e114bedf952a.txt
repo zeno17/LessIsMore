@@ -1,0 +1,95 @@
+One measure I like to use to project a receiver's potential is Fantasy Points per Target (FP/T). If an efficient player produces with limited targets, he is primed for a breakout if his role expands and his targets increase, provided he maintains a healthy FP/T. Dez Bryant is a great example. In 2011, he was #17 in FP/T (1.41) on 104 targets, finishing as the #16 WR in standard formats. In 2012, his targets increased to 138, and he posted an even better FP/T (1.52). As a result, he finished #3 among all receivers. In this case, Bryant had already had his breakout year, and then he broke out again.
+
+Other good examples from 2012 were James Jones, Demaryius Thomas, Eric Decker and Lance Moore. A year later, I featured Alshon Jeffery in the 2013 edition of this article. He posted a solid 1.14 FP/T (#37 in the league) on 48 targets during his injury-plagued rookie season. In his sophomore campaign he posted 1.24 FP/T on 149 targets, resulting in a #9 finish at his position.
+
+In 2014, Golden Tate was the best example of a productive receiver who turned an increase in targets into a stellar fantasy season. As he joined the Lions, his targets jumped from 99 to 143, while his FP/T stayed relatively steady (1.21 in 2013, 1.10 in 2014). The result was a #13 finish at his position in standard formats.
+
+Last season, I included Brandin Cooks, who finished his rookie season with the #19 per game average. He increased his FP/T from 1.06 as a rookie to 1.30 as a sophomore. His targets increased as well (from 6.9 T/G to 8.1 T/G), which resulted in a #12 finish in standard formats.
+
+So if we can identify a productive player who is going to see an increase in targets, then there's a good chance a breakout season will follow. There will be situations where a player's FP/T regresses towards the mean (which was 1.04 FP/T in 2015 among receivers with at least 30 targets), but the increase in targets will typically be enough to offset that drop in efficiency. Such was the case with Tate.
+
+Here are the 2015 FP/T tables for both standard and PPR formats.
+
+Note: Wondering if there is a correlation between FP/T year-over-year? I ran the numbers last offseason and there is a positive correlation (R-squared ~ .10). It’s not a strong relationship, but very little in fantasy football is. For more on receiver year-to-year correlations, read T.J. Hernandez's excellent piece on the subject.
+
+Breakout Candidates (FP/T)
+
+The following receivers show a combination of a strong (or at least solid) FP/T and a likely increase in targets, though each player and situation merits some discussion.
+
+DeVante Parker, Dolphins
+
+Parker fits the profile of a breakout receiver. Not only does he have a top 20 FP/T (1.35, #19), but his targets increased over the second half of the season – he averaged 7.0 T/G over the last six games, playing at a 59-1187-8 pace – and his new head coach (Adam Gase) has a history of featuring big receivers, getting an average of 6.0-90-0.44 from Alshon Jeffery and 6.9-101-0.69 from Demaryius Thomas over the past two seasons. If Parker plays starter’s snaps and sees 100-plus targets, he has a very good chance to turn into a fantasy starter.
+
+Dorial Green-Beckham, Titans
+
+Like Parker, DGB has a solid FP/T (1.18, #35) and is slated for a larger target share in his sophomore season. He averaged 5.9 T/G over his final nine games and played at a 44-791-3.5 pace in that span. I’m more optimistic about Parker due to his situation and the capability of Adam Gase, but DGB is a full two rounds cheaper on draft day. Note: Green-Beckham has been passed on the depth chart by Tajae Sharpe, so it's no sure thing that he's starting Week 1. Risk-adverse owners may want to proceed with caution.
+
+Rishard Matthews, Titans
+
+Matthews may actually be the breakout receiver to target in Tennessee. Through 11 weeks, the former Dolphin was on pace for a 69-1059-6.0 breakout season before going down with a season-ending rib injury. Ideally, Green-Beckham blossoms into a true WR1 with Matthews sliding in as a good WR2, but if DGB continues his slow start to his second season, Matthews could quickly have the most fantasy value of any of the Titan receivers not named Delanie Walker. Matthews is more proven and had the 7th highest FP/T in 2015. Given their respective prices – DGB in the 7th, Matthews in the 14th – I’d rather invest in Matthews.
+
+Markus Wheaton, Steelers
+
+Wheaton caught 44 passes for 749 yards and five touchdowns on the season, but really came on down the stretch, averaging 4.7 catches for 79 yards and 0.67 TD on 7.8 targets over the final six games of the season. He was the #12 fantasy receiver in that span, and with Martavis Bryant out for the year, it’s conceivable Wheaton could see 110-120 targets in 2016. Wheaton owned the #22 FP/T in standard formats (1.33 FP/T), so if he maintains that efficiency on 100 targets, he’ll be a solid fantasy WR3. His current WR45 ADP represents nice value.
+
+Tyler Lockett, Seahawks
+
+As a rookie, Lockett owned the #5 FP/T in standard formats (#3 in PPR), and he plays in a historically efficient passing offense. The only issue is volume. Lockett saw just 69 targets in 2015, but averaged 5.4 T/G (and 57.1 yards) over the final nine games of the season, including the playoffs. That’s an 86-target (and a 913-yard) pace, so if he’s able to maintain his 1.48 FP/T, it would yield 128 fantasy points, which is about what Rueben Randle scored as the #28 WR last year. If Lockett is going to crack the top 20, he’ll need to see 6.0+ T/G. The good news is that Russell Wilson has increased his pass attempts in each of the last three seasons, and with Marshawn Lynch retired, there may be more opportunity in the passing game for Lockett.
+
+Here are a couple of multi-year vets with a chance to return to fantasy starter status…
+
+Marvin Jones, Lions
+
+Jones has a history of fantasy production, finishing #21 in 2013 and then #39 last year (in standard formats) after missing the entire 2014 season with an injury. He saw 183 total targets in those two seasons, for a 91.5-target average. The Lions signed him to replace some of the production of Calvin Johnson, who left 149 targets, 1214 yards and nine touchdowns on the table. Jones’ FP/T (1.03) was average last year, but it was an elite 1.64 FP/T in 2013, when he scored 10 times. If he sees 120 targets at his 2015 FP/T, it would yield 123.6 FP, which are solid WR3 numbers in standard formats. He has upside from there if his TD rate regresses toward his 2013 levels. Normally I shy away from receivers who change teams, but this looks like a promotion for Jones, so he should produce.
+
+Torrey Smith, 49ers
+
+On paper, the 49ers offense projects to have a tough time moving the ball and scoring points, but that doesn’t mean owners should ignore Smith’s value in the later rounds. Just last year, Kamar Aiken (127 targets) and Travis Benjamin (125 targets) turned what appeared to be bad fantasy situations into #31 and #30 finishes, respectively. Smith averaged 108.5 targets in his first four seasons, and never finished lower than #23 in that span. Yes, it’s a different team with a poor quarterback situation, but we know Chip Kelly will push the pace, and the 49ers will likely trail most of the time, resulting in a pass-heavy game script. Kelly also has a knack for coaxing decent-to-excellent play out of of shaky quarterbacks (e.g. Nick Foles in 2013, Mark Sanchez in 2014 and Sam Bradford last year). When it’s all said and done, Smith could set a personal high for targets. Couple that with his #8 FP/T (1.46) in 2015 – he was #7 in that metric in 2014, by the way – and it’s not inconceivable that Smith has a career year.
+
+Breakout Candidates (FP/snap)
+
+Another stat I use to identify breakout candidates is FP/Snap. Using 4for4’s Player Snap App, I sorted by PPR/Snap (fantasy points per snap in a PPR scoring system), and set the filters to only include those players who played between 25% and 75% of their team’s snaps to remove some of the noise. A couple of interesting names jump out:
+
+Leonard Hankerson, Bills
+
+Hankerson posted a pretty good 0.14 FP/snap last season. He had a solid stretch with the Falcons before a hamstring injury prompted his release and subsequent signing with the Bills. I’m mentioning him in this space because he could challenge Robert Woods to be the team’s WR2 or even start alongside Woods if Sammy Watkins’ foot doesn’t heal as expected.
+
+Jaelen Strong, Texans
+
+Strong posted 0.12 FP/snap as a rookie which is solid if unspectacular. What makes him an intriguing player is the fact that he lost 30 lbs in the offseason and the relative opportunity in the Houston receiving corps. Many are expecting Will Fuller to emerge as the team’s WR2, but Strong has a year of experience and flashed some talent as a rookie. His top two athletic comparables at Mockdraftable.com are Martavis Bryant and Miles Austin.
+
+Two other interesting players fell below the 25%-snap minimum:
+
+J.J. Nelson, Cardinals
+
+It will take an injury to one of the team’s top three receivers for Nelson to get on the field consistently, but if he does – watch out. The big-play receiver averaged 1.55 FP/T and 0.28 FP/snap, which are excellent numbers in both categories. Fantasy owners should have Nelson’s number on speed dial.
+
+Bruce Ellington, 49ers
+
+Ellington is reportedly playing the slot in OTAs, which was Jordan Matthews’ position in Chip Kelly’s offense over the past two years (en route to 4.8 catches per game). Ellington’s combine scores – 4.45 40-yard dash, 3.95 20-yard shuttle, 6.69 3-cone drill – indicate elite athleticism. It will be interesting to see how Kelly uses him.
+
+The Impact of the QB (aFP/T)
+
+One thing that jumps out every year is that a majority of the top FP/T performers play with very good quarterbacks. Wide receivers are only as productive as the quarterback throwing them the ball and, conversely, to a certain degree a quarterback is only as good as his receiving corps.
+
+In 2012, Larry Fitzgerald (0.67, #107) and Michael Floyd (0.79, #96) really struggled in the FP/T department thanks to the three-headed monster of Kevin Kolb, John Skelton and Ryan Lindley that they had to endure at quarterback. Enter Carson Palmer, and Fitzgerald and Floyd finished #16 and #23, respectively.
+
+So I created a metric – aFP/T – that adjusts each receiver’s FP/T for the quality of his QB play. The full aFP/T ranking table of WRs normalized for QB play is available here. (The same table for PPR scoring systems is available here.) If a receiver is undergoing a change at quarterback, or there’s likely to be an improvement/regression from the existing quarterback, then these are the tables to reference.
+
+Heading into last season, Allen Robinson was among those who stood out as breakout candidates since it looked like he was going to enjoy better quarterback play from Blake Bortles. (And he did.) Who stands out this year?
+
+Donte Moncrief, Colts
+
+Moncrief posted a very average 1.04 FP/T in 2015, but how much of that had to do with the injury to Andrew Luck? Luck wasn’t great last year, but his career fantasy efficiency is near-elite. Luck is bound to bounce back this season and take the rest of the offense with him. Consider this: Even though Luck wasn’t himself last year, Moncrief averaged 1.20 FP/T in seven games with Luck versus just 0.87 FP/T in nine games without him. In the seven games that Luck played, Moncrief produced at a 73-802-11 pace. (He was also on pace for 123 targets, but finished with 105.) Those are solid WR2 numbers in both standard and PPR formats. Note: Luck’s return is also good for T.Y. Hilton, Frank Gore and Dwayne Allen, so don’t sleep on those players either.
+
+Kamar Aiken, Ravens
+
+Aiken racked up 75 catches for 944 yards and five touchdowns on 127 targets after injuries took down Steve L Smith and Breshad Perriman. Perriman has already had another knee scare and there is no guarantee that the 37-year-old Smith remains healthy, so Aiken could quickly find himself seeing WR1 targets yet again. Baltimore's fantasy passing efficiency was 31st in the league thanks in no small part to Joe Flacco's six-game absence. Flacco's efficiency should improve in his second year in Marc Trestman's system, and Aiken should also benefit.
+
+Travis Benjamin, Chargers
+
+Benjamin is getting a major quarterback upgrade. The Browns were 28th in fantasy passing efficiency, while the Chargers were 16th. (Philip Rivers and Co. were 6th the year before.) The only issue for Benjamin is his role. Benjamin turned 125 targets into a top 30 finish while with the Browns, but he’s unlikely to see that many targets with Keenan Allen, Antonio Gates, Stevie Johnson and Danny Woodhead on the roster. Johnson averaged 6.2 T/G last year with Allen in the lineup, and that’s probably Benjamin’s ceiling if he can win the WR2 job outright. That works out to 99 targets over a full season – if we multiply that by his 1.14 aFP/T, he’s looking at low-end WR3 numbers. He’s being drafted as a low-end WR4, so those that believe he’ll play starter’s snaps should target him in the 9th or 10th round.
+
+Kenny Britt & Tavon Austin, Rams
+
+The Rams were last in the league in fantasy passing efficiency, so they literally have nowhere to go but up. Enter rookie QB Jared Goff. If he can raise the level of the Rams’ passing game so it even remotely resembles respectability, Britt and Austin would be the main beneficiaries. Both players get a big boost when we adjust for quarterback play. After a career year, Austin is going in the 9th round while Britt can be had in the final rounds.

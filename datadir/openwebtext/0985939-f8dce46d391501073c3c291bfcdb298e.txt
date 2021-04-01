@@ -1,0 +1,33 @@
+Share with friends and colleagues on social media
+
+
+
+
+
+
+
+
+
+Sometimes you have to dig beneath the surface of headlines to understand what’s really going on. I guess that’s one thing most of us have learned in recent months. Sometimes you need some careful analysis to get to the real story. It seems like that’s as true in the IT world as it is with tabloid news.
+
+Take for example the RightScale 2017 “State of the Cloud Report”. A great piece of work by the way. I enjoy reading it every year. It provides insights on cloud usage from a survey of over 1000 IT professionals and I end up quoting it regularly.
+
+However, I was somewhat surprised with the headline in this year’s report. It read “public cloud adoption grows as private cloud wanes”. With a keen interest in OpenStack private cloud, I was concerned. Was this true? Well – after some digging the answer appears to be “yes” and “no”.
+
+Here are the facts.
+
+According to the key findings of the survey, the percent of respondents now adopting private cloud is 72, down from 77% a year ago. On the surface, that would seem like a worrying trend. But there’s more to the story than that.
+
+It appears that enterprises are more likely to opt for private cloud. The RightScale report says enterprises now run 43% of workloads in private cloud compared with 32% in public cloud. For balanced reporting, when we include SMBs in the data, there is an almost even split between public and private cloud (41% for public and 38% for private).
+
+Next, let’s take a look at OpenStack private cloud. The survey shows that OpenStack adoption actually grew 1% overall. Focusing again on enterprises, OpenStack adoption grew impressively to 25%, up from 21% the year before. That’s on the back of some massive growth numbers highlighted for OpenStack in the 2016 version of the report.
+
+At this point, I can almost hear you asking “so why the headline about private cloud waning?” Good question. That headline appears to point to VMware vSphere/vCenter falling back in this year’s report.
+
+Bottom line? All’s well on the OpenStack private cloud front. 451 Research recently delivered a forecast for a $5bn OpenStack market by 2020, with a growth rate of 35% CAGR. What’s driving the growth? According to 451 Research, it’s SDN, NFV, IoT, mobile, big data, DevOps and PaaS. Lots of buzz words, right? Frankly, that’s all the latest tech and IT trends covered right there. All the stuff your business will be interested in.
+
+My conclusion? OpenStack private cloud is doing just fine.
+
+Click here to learn why OpenStack should be on your shortlist.
+
+Follow Mark on Twitter
