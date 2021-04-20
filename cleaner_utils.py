@@ -66,6 +66,7 @@ TEXT_START_MARKERS = frozenset((
     'and the Project Gutenberg Online Distributed Proofreading Team',
     'Mary Meehan, and the Project Gutenberg Online Distributed Proofreading',
     '                this Project Gutenberg edition.',
+    'Based on the Play by'
 ))
 
 TEXT_END_MARKERS = frozenset((
@@ -94,12 +95,21 @@ TEXT_END_MARKERS = frozenset((
     "We need your donations more than ever!",
     "END OF PROJECT GUTENBERG",
     " End of the Project Gutenberg",
-    " *** END OF THIS PROJECT GUTENBERG",
+    " *** END OF THIS PROJECT GUTENBERG"
 ))
 
 LEGALESE_START_MARKERS = frozenset(("<<THIS ELECTRONIC VERSION OF",))
 
 LEGALESE_END_MARKERS = frozenset(("SERVICE THAT CHARGES FOR DOWNLOAD",))
+
+
+EMPTY_PHRASES = frozenset(("a novel",
+                           "by",
+                           "to"))
+
+TRANSCRIBER_NOTES = frozenset(("Minor typographical errors have been corrected without note. Dialect spellings have been retained.",
+                               "Punctuation and the “long s” have been modernised; spelling has been retained as it appears in the original publication."
+                               ))
 
 
 def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_deletions: bool = False, verify_deletions=False) -> str:
@@ -116,25 +126,43 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
     you can split the book to paragraphs by "\n\n".
     """
     headless_book = _strip_headers(book)
-    paragraphs = headless_book.replace('\r',"").split("\n\n")  # split the book to paragraphs.
+    paragraphs = headless_book.replace('\r',"").replace("_", "").split("\n\n")  # split the book to paragraphs.
 
     paragraphs_after_cleaning = []
+    after_the_end = False
+    after_the_index = False
     for par in paragraphs:
+        if after_the_end or after_the_index:
+            if verify_deletions:
+                print(True, par)
+                continue
+            else:
+                break
+        if par.strip('\n').lower() == 'the end' :
+            after_the_end = True
+        if par.strip('\n').lower() == 'index' :
+            after_the_index = True
+            
         if verify_deletions:
             manual_verify_deletions(par)
         if _is_image(par) or _is_footnote(par) or _is_email_init(par) or \
-                _is_books_copy(par) or _is_table(par) or _is_title_or_etc(par, min_token, max_token) or _is_table_of_contents(par):
+                _is_books_copy(par) or _is_table(par) or _is_title_or_etc(par, min_token, max_token) or \
+                    _is_table_of_contents(par) or _is_illustration(par) or _is_transcriber_notes(par):
+                        
             if mark_deletions:
                 paragraphs_after_cleaning.append("[deleted]")  # if the paragraph is not good, replace it with [deleted]
         else:
-            par = re.sub("(\\n)+", " ", par).replace("_", "")
-            paragraphs_after_cleaning.append(par)
-    
-    
-    cleaned_book = "\n\n".join(paragraphs_after_cleaning)  # joining the list of paragraphs into one string
-    return cleaned_book
+            paragraphs_after_cleaning.append(par.replace('“', '"').replace('”', '"').replace('\n', " "))
 
+    return " ".join(paragraphs_after_cleaning) # joining the list of paragraphs into one string
 
+def manual_verify_deletions(par):
+    print(_is_image(par) or _is_footnote(par) or _is_email_init(par) or _is_books_copy(par) \
+          or _is_table(par) or _is_title_or_etc(par, -1, 600) or _is_table_of_contents(par) or \
+              _is_illustration(par) or _is_transcriber_notes(par),
+          par)
+        
+        
 def _strip_headers(text):
     """Remove lines that are part of the Project Gutenberg header or footer.
     Note: The original version of the code can be found at:
@@ -223,6 +251,11 @@ def _is_title_or_etc(text: str, min_token: int = -1, max_token: int = 600) -> bo
     if ("@" in txt and len(txt) < 100) or ('printed in' in txt.lower() and len(txt) < 200) or "inc." in txt.lower() \
             or ('original title' in txt.lower() and len(txt) < 200):
         return True
+    if text.lower() in EMPTY_PHRASES:
+        return True
+    if sum([x[0].strip('\n').isupper() for x in text.split(' ') if len(x) > 0 ])/len([x for x in text.split(' ') if x != '']) > 0.6: #more than 75% of the words start with a capital letter.
+        return True
+    
     return False
 
 
@@ -269,7 +302,7 @@ def _is_footnote(text: str) -> bool:
 
 
 def _is_books_copy(text: str) -> bool:
-    """
+    """x
     determining if a paragraph indicates the number of copies of this book.
     :rtype: bool
     :param text: text: Raw paragraph.
@@ -291,18 +324,30 @@ def _is_email_init(text: str) -> bool:
 
 def _is_table_of_contents(text: str) -> bool:
     """
-    Other functions were sometimes missing specific lines from the table of contents that started with 'CHAPTER'
+    Other functions were sometimes missing specific lines from the table of contents 
+    
+    check if sentence:
+        contains 'CHAPTER'
+        contains roman numerals (often used in )
     """
-    return 'CHAPTER' in text
+    
+    if 'CHAPTER' in text:
+        return True
+    if _is_roman_numerals(text.split('.')[0]):
+        return True
+    return False
 
-def manual_verify_deletions(par):
-    if _is_image(par) or _is_footnote(par) or _is_email_init(par) or \
-        _is_books_copy(par) or _is_table(par) or _is_title_or_etc(par, -1) or _is_table_of_contents(par):
-        print(_is_image(par),
-              _is_footnote(par),
-              _is_email_init(par),
-              _is_books_copy(par),
-              _is_table(par),
-              _is_title_or_etc(par, -1, 600),
-              _is_table_of_contents(par),
-              par)
+def _is_illustration(text: str) -> bool:
+    return text.startswith('[Illustration:')
+
+        
+def _is_roman_numerals(text: str) -> bool:
+    for char in text:
+        if char not in ["M", "D", "C", "L", "X", "V", "I"]:
+            return False
+    return True
+
+def _is_transcriber_notes(text: str) -> bool:
+    if text in TRANSCRIBER_NOTES:
+        return True
+    return False
