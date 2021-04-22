@@ -105,7 +105,16 @@ LEGALESE_END_MARKERS = frozenset(("SERVICE THAT CHARGES FOR DOWNLOAD",))
 
 EMPTY_PHRASES = frozenset(("a novel",
                            "by",
+                           "to",
+                           "\nby",
+                           "and",
+                           "for",
+                           "for,",
+                           "of",
                            "to"))
+
+END_MARKERS = frozenset(("the end",
+                         "the end."))
 
 TRANSCRIBER_NOTES = frozenset(("Minor typographical errors have been corrected without note. Dialect spellings have been retained.",
                                "Punctuation and the “long s” have been modernised; spelling has been retained as it appears in the original publication."
@@ -138,7 +147,7 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
                 continue
             else:
                 break
-        if par.strip('\n').lower() == 'the end' :
+        if par.strip('\n').lower() in END_MARKERS:
             after_the_end = True
         if par.strip('\n').lower() == 'index' :
             after_the_index = True
@@ -152,9 +161,11 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
             if mark_deletions:
                 paragraphs_after_cleaning.append("[deleted]")  # if the paragraph is not good, replace it with [deleted]
         else:
-            paragraphs_after_cleaning.append(par.replace('“', '"').replace('”', '"').replace('\n', " "))
+            #replace some final unnecessary stuff
+            paragraphs_after_cleaning.append(par.replace('“', '"').replace('”', '"').replace("+", "").replace("\n", " "))
 
-    return " ".join(paragraphs_after_cleaning) # joining the list of paragraphs into one string
+
+    return paragraphs_after_cleaning # joining the list of paragraphs into one string
 
 def manual_verify_deletions(par):
     print(_is_image(par) or _is_footnote(par) or _is_email_init(par) or _is_books_copy(par) \
@@ -251,7 +262,7 @@ def _is_title_or_etc(text: str, min_token: int = -1, max_token: int = 600) -> bo
     if ("@" in txt and len(txt) < 100) or ('printed in' in txt.lower() and len(txt) < 200) or "inc." in txt.lower() \
             or ('original title' in txt.lower() and len(txt) < 200):
         return True
-    if text.lower() in EMPTY_PHRASES:
+    if text.strip().lower() in EMPTY_PHRASES:
         return True
     if sum([x[0].strip('\n').isupper() for x in text.split(' ') if len(x) > 0 ])/len([x for x in text.split(' ') if x != '']) > 0.6: #more than 75% of the words start with a capital letter.
         return True
@@ -333,7 +344,9 @@ def _is_table_of_contents(text: str) -> bool:
     
     if 'CHAPTER' in text:
         return True
-    if _is_roman_numerals(text.split('.')[0]):
+    if "Part" in text and len(text.split(' ')) < 4:
+        return True
+    if _is_roman_numerals(text.split('.')[0].strip()) or _is_roman_numerals(text.split('.')[0].strip().strip('.')):
         return True
     return False
 

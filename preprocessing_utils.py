@@ -2,50 +2,13 @@
 """
 Created on Tue Apr 20 11:33:39 2021
 
-@author: s145733
 """
 import spacy
 from datetime import datetime
 import re
 import torch
-
-def book_to_sentences(book):
-    '''
-    Use spaCy to detect sentence ends/starts. 
-    It is notiriously bad at recognizing sentences with quotation marks in it.
-    We therefore manually combine sentences which are "incomplete", where incompleteness 
-    is defined by an odd number of quotation marks '"'
-    
-    Returns a list of split 
-    '''
-    
-    #Disable all unnecessary components
-    nlp = spacy.load("en_core_web_sm", disable=["ner", "tok2vec", "tagger", "parser", "attribute_ruler", "lemmatizer"])
-    nlp.add_pipe('sentencizer')
     
     
-    sentences = []
-    
-    #Push the entire book through spaCy in 1 go
-    doc = nlp(book)
-    
-    complete_sentence = True #Start with complete sentence
-    for sent in doc.sents:
-        if complete_sentence:
-            if sent.text.count('"') % 2 == 0:
-                sentences.append(sent.text)
-                complete_sentence = True
-            else:
-                sentences.append(sent.text)
-                complete_sentence = False
-        else:
-            sentences[-1] = sentences[-1] + sent.text
-            if sentences[-1].count('"') % 2 == 0:
-                complete_sentence = True
-            else:
-                continue
-    return sentences
-
 def whole_word_MO_tokenization_and_masking(tokenizer, nlp_model, sequence: str):
         """
         posoi: Part-Of-Speech of interest
@@ -69,15 +32,13 @@ def whole_word_MO_tokenization_and_masking(tokenizer, nlp_model, sequence: str):
         
         input_ids = tokenizer.encode(sequence, add_special_tokens=False)
         input_tokens = tokenizer.convert_ids_to_tokens(input_ids)
-        #print(sequence)
-        #print(input_tokens)
+
         sequence_pos_list = [token.pos_ for token in spacy_sentence]
         sequence_pos_frequency = {pos: sequence_pos_list.count(pos) for pos in sequence_pos_list}
         
         modified_input_list = []
         
-        #POS-masking
-        #print('pos-start:', datetime.now().time())
+        #POS-based masking
         for posoi in sequence_pos_frequency.keys():
             posoi_vocab = [token.text for token in spacy_sentence if token.pos_ == posoi]
             
@@ -104,22 +65,19 @@ def whole_word_MO_tokenization_and_masking(tokenizer, nlp_model, sequence: str):
             masked_input = tokenizer.decode(masked_tokens)         
             modified_input_list.append(masked_input)
             
-            #print(posoi, masked_input)
+            
         
-        #print('lemma-start:', datetime.now().time())
         #POS-based lemmatization
         replacement_tuples = [(token.text, token.lemma_) for token in spacy_sentence if token.text.lower() != token.lemma_]
-        #print(replacement_tuples)
         pos_replaced_sentence = sequence
         for replacement in replacement_tuples:
             pos_replaced_sentence = re.sub(r'\b' + replacement[0] + r'\b', replacement[1], pos_replaced_sentence)
 
         pos_replaced_sentence = pos_replaced_sentence.replace("  ", " ")
-        #print('Lemma', pos_replaced_sentence)
         modified_input_list.append(pos_replaced_sentence)
         
+        
         #NER-based swapping of time-place (if present)
-        #print('ner-start:', datetime.now().time())
         ner_swapped_sentence = spacy_sentence.text
         for ent in spacy_sentence.ents:
             if ent.label_ == 'TIME':
@@ -134,16 +92,14 @@ def whole_word_MO_tokenization_and_masking(tokenizer, nlp_model, sequence: str):
         #
         #
         
-    
-        #actually tokenize input
         inputs = tokenizer(modified_input_list, return_tensors="pt", padding='max_length')
 
         inputs['labels'] = tokenizer([sequence for i in range(0,inputs['input_ids'].shape[0])], 
                                      return_attention_mask=False, 
                                      return_token_type_ids=False,
                                      return_tensors='pt', padding='max_length')['input_ids']
-        
         return inputs
+    
     
 class MODataset(torch.utils.data.Dataset):
     def __init__(self, encodings):

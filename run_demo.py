@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Apr 20 14:22:31 2021
-
-@author: s145733
-"""
 
 #Preprocessing code
 from cleaner_utils import super_cleaner
@@ -30,10 +25,11 @@ import torch
 if __name__ == "__main__":
     cleaned_book = super_cleaner(load_etext(16968), -1, verify_deletions=False)
     sentences = book_to_sentences(cleaned_book)
-    
+    print("loaded book")
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
     nlp = spacy.load("en_core_web_sm")
 
+    print("loaded tokenizer and spaCy")
     inputs = whole_word_MO_tokenization_and_masking(tokenizer, nlp, sentences[0])
     train_dataset = MODataset(inputs)
     
@@ -56,6 +52,9 @@ if __name__ == "__main__":
         eval_dataset=None            # evaluation dataset
     )
     
+    print("Everything ready for training")
+    
     trainer.train()
+    print("Finished training")
     
     

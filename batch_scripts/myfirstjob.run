@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+#SBATCH --partition=mcs.gpu.q
+#SBATCH --error=slurm-%jerr
+#SBATCH --output=slurm-%j.out
+#SBATCH --time=2:00:00
+print("This is clearly working") 
