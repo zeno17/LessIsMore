@@ -8,7 +8,7 @@ import re
 from transformers import BertTokenizer
 
 class StrategizedTokenizer(object):
-    def __init__(self, pos_based_mask=True, lemmatize=True, ner_based_swap=True):
+    def __init__(self, pos_based_mask=True, lemmatize=True, ner_based_swap=True, padding='max_length', truncation=True):
         """
         Constructs the strategized Tokenizer.
         Loads the required spacy model
@@ -22,7 +22,8 @@ class StrategizedTokenizer(object):
         self.pos_based_mask = pos_based_mask
         self.lemmatize = lemmatize
         self.ner_based_swap = ner_based_swap
-        
+        self.padding = padding
+        self.truncation=truncation
 
     def tokenize(self, text):
         spacy_sentence = self.nlp(text, disable=['parser'])
@@ -36,17 +37,17 @@ class StrategizedTokenizer(object):
             processed_text_list += self.ner_swap_text(text, spacy_sentence)
         #TODO add more?
         
-        for x in processed_text_list:
-            print(x)
         inputs = self.tokenizer(processed_text_list,
                                 return_token_type_ids=False, #Dont need this because we dont use NSP
                                 return_tensors="pt", 
-                                padding=True)
+                                padding=self.padding,
+                                truncation=self.truncation)
         inputs['labels'] = self.tokenizer([text for i in range(0,len(processed_text_list))], 
                                           return_attention_mask=False, 
                                           return_token_type_ids=False,
                                           return_tensors='pt', 
-                                          padding=True)['input_ids']
+                                          padding=self.padding,
+                                          truncation=self.truncation)['input_ids']
         return inputs
     
     def mask_text_pos_based(self, text, spacy_sentence) -> list:

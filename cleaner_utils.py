@@ -10,6 +10,7 @@ from builtins import str
 import os
 import re
 import string
+import numpy as np
 from nltk import word_tokenize
 
 TEXT_START_MARKERS = frozenset((
@@ -111,7 +112,8 @@ EMPTY_PHRASES = frozenset(("a novel",
                            "for",
                            "for,",
                            "of",
-                           "to"))
+                           "to",
+                           "contents"))
 
 END_MARKERS = frozenset(("the end",
                          "the end."))
@@ -120,8 +122,48 @@ TRANSCRIBER_NOTES = frozenset(("Minor typographical errors have been corrected w
                                "Punctuation and the “long s” have been modernised; spelling has been retained as it appears in the original publication."
                                ))
 
+GUTENBERG_DISCLAIMER = frozenset(("501(c)(3) educational corporation organized under the laws of the state of Mississippi and granted tax exempt status by the Internal Revenue Service. The Foundation's EIN or federal tax identification number is 64-6221541. Its 501(c)(3) letter is posted at http://pglaf.org/fundraising. Contributions to the Project Gutenberg Literary Archive Foundation are tax deductible to the full extent permitted by U.S. federal laws and your state's laws.",
+                                 "The Foundation's principal office is located at 4557 Melan Dr. S. Fairbanks, AK, 99712., but its volunteers and employees are scattered throughout numerous locations. Its business office is located at 809 North 1500 West, Salt Lake City, UT 84116, (801) 596-1887, email business@pglaf.org. Email contact links and up to date contact information can be found at the Foundation's web site and official page at http://pglaf.org",
+                                 'For additional contact information: Dr. Gregory B. Newby Chief Executive and Director gbnewby@pglaf.org',
+                                 'Section 4. Information about Donations to the Project Gutenberg Literary Archive Foundation',
+                                 'Project Gutenberg-tm depends upon and cannot survive without wide spread public support and donations to carry out its mission of increasing the number of public domain and licensed works that can be freely distributed in machine readable form accessible by the widest array of equipment including outdated equipment. Many small donations ($1 to $5,000) are particularly important to maintaining tax exempt status with the IRS.',
+                                 'The Foundation is committed to complying with the laws regulating charities and charitable donations in all 50 states of the United States. Compliance requirements are not uniform and it takes a considerable effort, much paperwork and many fees to meet and keep up with these requirements. We do not solicit donations in locations where we have not received written confirmation of compliance. To SEND DONATIONS or determine the status of compliance for any particular state visit http://pglaf.org',
+                                 'While we cannot and do not solicit contributions from states where we have not met the solicitation requirements, we know of no prohibition against accepting unsolicited donations from donors in such states who approach us with offers to donate.',
+                                 'International donations are gratefully accepted, but we cannot make any statements concerning tax treatment of donations received from outside the United States. U.S. laws alone swamp our small staff.',
+                                 'Please check the Project Gutenberg Web pages for current donation methods and addresses. Donations are accepted in a number of other ways including checks, online payments and credit card donations. To donate, please visit: http://pglaf.org/donate',
+                                 'Section 5. General Information About Project Gutenberg-tm electronic works.',
+                                 'Professor Michael S. Hart is the originator of the Project Gutenberg-tm concept of a library of electronic works that could be freely shared with anyone. For thirty years, he produced and distributed Project Gutenberg-tm eBooks with only a loose network of volunteer support.',
+                                 'Project Gutenberg-tm eBooks are often created from several printed editions, all of which are confirmed as Public Domain in the U.S. unless a copyright notice is included. Thus, we do not necessarily keep eBooks in compliance with any particular paper edition.',
+                                 "Each eBook is in a subdirectory of the same number as the eBook's eBook number, often in several formats including plain vanilla ASCII, compressed (zipped), HTML and others.",
+                                 'Corrected EDITIONS of our eBooks replace the old file and take over the old filename and etext number. The replaced older file is renamed. VERSIONS based on separate sources are treated as new eBooks receiving new filenames and etext numbers.',
+                                 'Most people start at our Web site which has the main PG search facility:',
+                                 'http://www.gutenberg.org',
+                                 'This Web site includes information about Project Gutenberg-tm, including how to make donations to the Project Gutenberg Literary Archive Foundation, how to help produce our new eBooks, and how to subscribe to our email newsletter to hear about new eBooks.',
+                                 'EBooks posted prior to November 2003, with eBook numbers BELOW #10000, are filed in directories based on their release date. If you want to download any of these eBooks directly, rather than using the regular search system you may utilize the following addresses and just download by the etext year.',
+                                 'http://www.ibiblio.org/gutenberg/etext06',
+                                 '(Or /etext 05, 04, 03, 02, 01, 00, 99, 98, 97, 96, 95, 94, 93, 92, 92, 91 or 90)',
+                                 'EBooks posted since November 2003, with etext numbers OVER #10000, are filed in a different way. The year of a release date is no longer part of the directory path. The path is based on the etext number (which is identical to the filename). The path to the file is made up of single digits corresponding to all but the last digit in the filename. For example an eBook of filename 10234 would be found at:',
+                                 'http://www.gutenberg.org/1/0/2/3/10234',
+                                 'or filename 24689 would be found at: http://www.gutenberg.org/2/4/6/8/24689',
+                                 'An alternative method of locating eBooks: http://www.gutenberg.org/GUTINDEX.ALL',
+                                 '*** END: FULL LICENSE ***',
+                                 "501(c)(3) educational corporation organized under the laws of the state of Mississippi and granted tax exempt status by the Internal Revenue Service. The Foundation's EIN or federal tax identification number is 64-6221541. Its 501(c)(3) letter is posted at https://pglaf.org/fundraising. Contributions to the Project Gutenberg Literary Archive Foundation are tax deductible to the full extent permitted by U.S. federal laws and your state's laws.",
+                                 'The Foundation is committed to complying with the laws regulating charities and charitable donations in all 50 states of the United States. Compliance requirements are not uniform and it takes a considerable effort, much paperwork and many fees to meet and keep up with these requirements. We do not solicit donations in locations where we have not received written confirmation of compliance. To SEND DONATIONS or determine the status of compliance for any particular state visit https://pglaf.org',
+                                 'Please check the Project Gutenberg Web pages for current donation methods and addresses. Donations are accepted in a number of other ways including including checks, online payments and credit card donations. To donate, please visit: https://pglaf.org/donate',
+                                 'Professor Michael S. Hart was the originator of the Project Gutenberg-tm concept of a library of electronic works that could be freely shared with anyone. For thirty years, he produced and distributed Project Gutenberg-tm eBooks with only a loose network of volunteer support.',
+                                 'https://www.gutenberg.org',
+                                 'a team of about twenty Project Gutenberg volunteers.',
+                                 "501(c)(3) educational corporation organized under the laws of the state of Mississippi and granted tax exempt status by the Internal Revenue Service. The Foundation's EIN or federal tax identification number is 64-6221541. Contributions to the Project Gutenberg Literary Archive Foundation are tax deductible to the full extent permitted by U.S. federal laws and your state's laws.",
+                                 "The Foundation's business office is located at 809 North 1500 West, Salt Lake City, UT 84116, (801) 596-1887. Email contact links and up to date contact information can be found at the Foundation's website and official page at www.gutenberg.org/contact",
+                                 'Project Gutenberg-tm depends upon and cannot survive without widespread public support and donations to carry out its mission of increasing the number of public domain and licensed works that can be freely distributed in machine-readable form accessible by the widest array of equipment including outdated equipment. Many small donations ($1 to $5,000) are particularly important to maintaining tax exempt status with the IRS.',
+                                 'The Foundation is committed to complying with the laws regulating charities and charitable donations in all 50 states of the United States. Compliance requirements are not uniform and it takes a considerable effort, much paperwork and many fees to meet and keep up with these requirements. We do not solicit donations in locations where we have not received written confirmation of compliance. To SEND DONATIONS or determine the status of compliance for any particular state visit www.gutenberg.org/donate',
+                                 'Please check the Project Gutenberg web pages for current donation methods and addresses. Donations are accepted in a number of other ways including checks, online payments and credit card donations. To donate, please visit: www.gutenberg.org/donate',
+                                 'Professor Michael S. Hart was the originator of the Project Gutenberg-tm concept of a library of electronic works that could be freely shared with anyone. For forty years, he produced and distributed Project Gutenberg-tm eBooks with only a loose network of volunteer support.',
+                                 'Most people start at our website which has the main PG search facility: www.gutenberg.org',
+                                 'This website includes information about Project Gutenberg-tm, including how to make donations to the Project Gutenberg Literary Archive Foundation, how to help produce our new eBooks, and how to subscribe to our email newsletter to hear about new eBooks.'))
 
-def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_deletions: bool = False, verify_deletions=False) -> str:
+
+def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_deletions: bool = False, verify_deletions=False, return_list=True) -> str:
     """
     Super clean the book (titles, footnotes, images, book information, etc.). may delete some good lines too.
     ^_^ Do you have a comment to make it better? make an issue here: https://github.com/kiasar/gutenberg_cleaner ^_^.
@@ -135,7 +177,10 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
     you can split the book to paragraphs by "\n\n".
     """
     headless_book = _strip_headers(book)
-    paragraphs = headless_book.replace('\r',"").replace("_", "").split("\n\n")  # split the book to paragraphs.
+    if '\n\n' in headless_book: # paragraphs are split with \n\n
+        paragraphs = headless_book.replace('\r',"").split("\n\n")  # split the book to paragraphs.
+    else: #paragraphs are split with \r\n\r\n
+        paragraphs = [re.sub(' +', ' ', x.replace('\r\n', " ")) for x in headless_book.split("\r\n\r\n")]  # split the book to paragraphs.
 
     paragraphs_after_cleaning = []
     after_the_end = False
@@ -162,11 +207,23 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
                 paragraphs_after_cleaning.append("[deleted]")  # if the paragraph is not good, replace it with [deleted]
         else:
             #replace some final unnecessary stuff
-            paragraphs_after_cleaning.append(par.replace('“', '"').replace('”', '"').replace("+", "").replace("\n", " "))
+            cleaned_text = strip_makeup(par)
+            paragraphs_after_cleaning.append(cleaned_text)
+    if return_list:    
+        return list(np.unique(paragraphs_after_cleaning)) # joining the list of paragraphs into one string
+    else:
+        return " ".join(paragraphs_after_cleaning)
 
 
-    return paragraphs_after_cleaning # joining the list of paragraphs into one string
-
+def strip_makeup(par):
+    cleaned_text = par.replace('“', '"').replace('”', '"').replace("\n", " ")
+    for match in re.findall(r'(\+.*?\+)', cleaned_text, flags=re.IGNORECASE):
+        cleaned_text = cleaned_text.replace(match, match.strip('+'))
+    for match in re.findall(r'(\_.*?\_)', cleaned_text, flags=re.IGNORECASE):
+        cleaned_text = cleaned_text.replace(match, match.strip("_"))
+    return cleaned_text
+    
+    
 def manual_verify_deletions(par):
     print(_is_image(par) or _is_footnote(par) or _is_email_init(par) or _is_books_copy(par) \
           or _is_table(par) or _is_title_or_etc(par, -1, 600) or _is_table_of_contents(par) or \
@@ -308,6 +365,8 @@ def _is_footnote(text: str) -> bool:
     if "footnote" in txt.lower() and len(txt.replace(" ", "")) < 50:
         return True
     if "Transcriber’s Note:" in txt:
+        return True
+    if txt.strip() in GUTENBERG_DISCLAIMER:
         return True
     return bool(re.search(footnote_notation_regex, txt))  # if a line starts with {...} it might be a footnote.
 

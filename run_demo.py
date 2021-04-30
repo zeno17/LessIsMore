@@ -1,48 +1,38 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-[8 -*-
 
-#Preprocessing code
-from cleaner_utils import super_cleaner
-from preprocessing_utils import book_to_sentences, whole_word_MO_tokenization_and_masking
-from preprocessing_utils import MODataset
-from gutenberg.acquire import load_etext
 
-#Training code
+from dataset.dataset import MODataset
+
 from transformers import BertConfig
 from transformers import BertForMaskedLM
-from transformers import BertTokenizer
-from transformers import AdamW
 from transformers import Trainer, TrainingArguments
 
-#General imports
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import spacy
-import re
-import json
-import torch
-
 if __name__ == "__main__":
-    cleaned_book = super_cleaner(load_etext(16968), -1, verify_deletions=False)
-    sentences = book_to_sentences(cleaned_book)
-    print("loaded book")
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-    nlp = spacy.load("en_core_web_sm")
-
-    print("loaded tokenizer and spaCy")
-    inputs = whole_word_MO_tokenization_and_masking(tokenizer, nlp, sentences[0])
-    train_dataset = MODataset(inputs)
+    train_dataset = MODataset(datadir='../pretraining_data')
+    train_dataset.populate()
     
-    model = BertForMaskedLM(config=BertConfig())
+    bert_tiny_config = {"hidden_size": 128, 
+                    "hidden_act": "gelu", 
+                    "initializer_range": 0.02, 
+                    "vocab_size": 30522, 
+                    "hidden_dropout_prob": 0.1, 
+                    "num_attention_heads": 2, 
+                    "type_vocab_size": 2, 
+                    "max_position_embeddings": 512, 
+                    "num_hidden_layers": 2, 
+                    "intermediate_size": 512, 
+                    "attention_probs_dropout_prob": 0.1}
+
+    model = BertForMaskedLM(config=BertConfig(**bert_tiny_config))
+    model.train();
     
     training_args = TrainingArguments(
-    output_dir='./results',          # output directory
-    num_train_epochs=3,              # total # of training epochs
-    per_device_train_batch_size=1,  # batch size per device during training
-    #per_device_eval_batch_size=256,   # batch size for evaluation
-    learning_rate=1e-5,     
-    logging_dir='./logs',            # directory for storing logs
-    
+        output_dir='./results',          # output directory
+        num_train_epochs=3,              # total # of training epochs
+        per_device_train_batch_size=2,  # batch size per device during training
+        #per_device_eval_batch_size=256,   # batch size for evaluation
+        learning_rate=1e-5,     
+        logging_dir='./logs',            # directory for storing logs
     )
     
     trainer = Trainer(
