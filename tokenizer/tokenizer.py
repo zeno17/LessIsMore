@@ -26,7 +26,7 @@ class StrategizedTokenizer(object):
         self.truncation=truncation
 
     def tokenize(self, text):
-        spacy_sentence = self.nlp(text, disable=['parser'])
+        spacy_sentence = self.nlp(str(text), disable=['parser'])
         
         processed_text_list = []
         if self.pos_based_mask:

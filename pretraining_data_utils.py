@@ -10,7 +10,7 @@ from transformers import BertTokenizer
 import logging
 import numpy as np
 import pandas as pd
-import tqdm
+from tqdm import tqdm
 
 import torch
 import os
@@ -206,9 +206,9 @@ class BookWriter(object):
             if self.overwrite == 'skip':
                 return
             elif self.overwrite == False:
-                raise TensorFileAlreadyExists('File already exists at {}. Use BookWriter(overwrite=True) if you want to overwrite existing files'.format(os.path.join(self.datadir, str(book_id), "tensor_file.pt")))
+                raise FileExistsError('File already exists at {}. Use BookWriter(overwrite=True) if you want to overwrite existing files'.format(os.path.join(self.datadir, str(book_id), "tensor_file.pt")))
 
-        sentences = super_cleaner(load_etext(book_id), -1, verify_deletions=False)
+        sentences = super_cleaner(load_etext(int(book_id)), -1, verify_deletions=False)
         print('Read book {}. Starting encoding'.format(book_id))
         inputs = self.encode_book(sentences)
         print('Encoded book {}. Starting saving'.format(book_id))
@@ -231,16 +231,12 @@ class BookWriter(object):
             os.makedirs(directory)
         elif os.path.exists(directory) and os.path.exists(path):
             if self.overwrite == False:
-                raise TensorFileAlreadyExists('File already exists at {}. Use BookWriter(overwrite=True) if you want to overwrite existing files'.format(path))
+                raise FileExistsError('File already exists at {}. Use BookWriter(overwrite=True) if you want to overwrite existing files'.format(path))
         torch.save(inputs, path)
         print('Saved book {} to {}.'.format(book_id, path))
         
 class Error(Exception):
     """Base class for other exceptions"""
-    pass
-
-class TensorFileAlreadyExists(Error):
-    """Raised when a tensor_file.pt already exists for a given book_id"""
     pass
 
 class DatadirDoesNotExist(Error):
