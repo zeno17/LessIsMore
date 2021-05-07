@@ -7,7 +7,9 @@ import re
 
 from transformers import BertTokenizer
 
-class StrategizedTokenizer(object):
+from transformers.tokenization_utils import PreTrainedTokenizer
+
+class StrategizedTokenizer(PreTrainedTokenizer):
     def __init__(self, pos_based_mask=True, lemmatize=True, ner_based_swap=True, padding='max_length', truncation=True):
         """
         Constructs the strategized Tokenizer.
@@ -17,6 +19,19 @@ class StrategizedTokenizer(object):
         
         ==Not guaranteed to work on cased vocabularies==
         """
+        super().__init__(
+            do_lower_case=True,
+            do_basic_tokenize=True,
+            never_split=None,
+            unk_token="[UNK]",
+            sep_token="[SEP]",
+            pad_token="[PAD]",
+            cls_token="[CLS]",
+            mask_token="[MASK]",
+            tokenize_chinese_chars=True,
+            strip_accents=None,
+        )
+        
         self.nlp = spacy.load("en_core_web_sm")
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.pos_based_mask = pos_based_mask
@@ -24,6 +39,7 @@ class StrategizedTokenizer(object):
         self.ner_based_swap = ner_based_swap
         self.padding = padding
         self.truncation=truncation
+       
 
     def tokenize(self, text):
         spacy_sentence = self.nlp(str(text), disable=['parser'])
@@ -35,7 +51,7 @@ class StrategizedTokenizer(object):
             processed_text_list += self.lemmatize_text(text, spacy_sentence)         
         if self.ner_based_swap:
             processed_text_list += self.ner_swap_text(text, spacy_sentence)
-        #TODO add more?
+        #TODO add more methods?
         
         inputs = self.tokenizer(processed_text_list,
                                 return_token_type_ids=False, #Dont need this because we dont use NSP
@@ -88,7 +104,10 @@ class StrategizedTokenizer(object):
         return pos_masks
     
     def lemmatize_text(self, text, spacy_sentence) -> list:
-        replacement_tuples = [(token.text, token.lemma_) for token in spacy_sentence if token.text.lower() != token.lemma_]
+        #avoid unnecessary replacements. parenthesis break regex, just avoid all together.
+        replacement_tuples = [(token.text, token.lemma_) for token in spacy_sentence \
+                              if token.text.lower() != token.lemma_ and token.text != token.lemma_ and \
+                                  not '(' in token.text and not ')' in token.text] 
         lemmatized_text = text
         for replacement in replacement_tuples:
             lemmatized_text = re.sub(r'\b' + replacement[0] + r'\b', replacement[1], lemmatized_text)

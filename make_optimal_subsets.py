@@ -9,7 +9,7 @@ import os
 import pandas as pd
 import argparse
 
-from pretraining_data_utils import make_book_token_frequency, token_freq_df_to_dict, all_available_tokens_from_df, optimize_book_subset, optimize_book_subset_ratio
+from pretraining_data_utils import make_book_token_frequency, token_freq_df_to_dict, all_available_tokens_from_df, optimize_book_subset_ratio
           
       
 def main():
@@ -17,7 +17,7 @@ def main():
     parser.add_argument("--cache-dir", required=True,
                         help="Location of pre-made files")
     
-    parser.add_argument("--datasizes", default = [1e5, 1e6, 1e7], type=list,
+    parser.add_argument("--datasizes", default = [1e5, 1e6, 1e7, 1e8], type=list,
                         help="Which sizes of datasets should be created")
     
     args = parser.parse_args()
@@ -48,14 +48,9 @@ def main():
     
     for datasize in datasizes:
         print('Optimizing datasize: ', datasize)
-        print('Greedy algorithm')
-        subset_meta = optimize_book_subset(all_present_tokens, tokens_per_book, threshold=datasize)
-        print(subset_meta)
         print('Greedy ratio algorithm')
         subset_meta_ratio = optimize_book_subset_ratio(all_present_tokens, tokens_per_book, threshold=datasize)
         print(subset_meta_ratio)
-        with open(os.path.join(cache_dir, 'subset_meta_' + human_format(datasize) + '.pkl'), 'wb') as f:
-            pickle.dump(subset_meta, f)
         with open(os.path.join(cache_dir, 'subset_meta_ratio_' + human_format(datasize) + '.pkl'), 'wb') as f:
             pickle.dump(subset_meta_ratio, f)
                 

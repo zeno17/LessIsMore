@@ -184,9 +184,8 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
 
     paragraphs_after_cleaning = []
     after_the_end = False
-    after_the_index = False
     for par in paragraphs:
-        if after_the_end or after_the_index:
+        if after_the_end:
             if verify_deletions:
                 print(True, par)
                 continue
@@ -194,14 +193,12 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
                 break
         if par.strip('\n').lower() in END_MARKERS:
             after_the_end = True
-        if par.strip('\n').lower() == 'index' :
-            after_the_index = True
             
         if verify_deletions:
             manual_verify_deletions(par)
         if _is_image(par) or _is_footnote(par) or _is_email_init(par) or \
                 _is_books_copy(par) or _is_table(par) or _is_title_or_etc(par, min_token, max_token) or \
-                    _is_table_of_contents(par) or _is_illustration(par) or _is_transcriber_notes(par):
+                    _is_table_of_contents(par) or _is_illustration(par) or _is_transcriber_notes(par) or _is_diagram(par):
                         
             if mark_deletions:
                 paragraphs_after_cleaning.append("[deleted]")  # if the paragraph is not good, replace it with [deleted]
@@ -216,18 +213,19 @@ def super_cleaner(book: str, min_token: int = 5, max_token: int = 600, mark_dele
 
 
 def strip_makeup(par):
-    cleaned_text = par.replace('“', '"').replace('”', '"').replace("\n", " ")
+    cleaned_text = par.replace("\n", " ")
     for match in re.findall(r'(\+.*?\+)', cleaned_text, flags=re.IGNORECASE):
         cleaned_text = cleaned_text.replace(match, match.strip('+'))
     for match in re.findall(r'(\_.*?\_)', cleaned_text, flags=re.IGNORECASE):
         cleaned_text = cleaned_text.replace(match, match.strip("_"))
+        
     return cleaned_text
     
     
 def manual_verify_deletions(par):
     print(_is_image(par) or _is_footnote(par) or _is_email_init(par) or _is_books_copy(par) \
           or _is_table(par) or _is_title_or_etc(par, -1, 600) or _is_table_of_contents(par) or \
-              _is_illustration(par) or _is_transcriber_notes(par),
+              _is_illustration(par) or _is_transcriber_notes(par) or _is_diagram(par),
           par)
         
         
@@ -341,6 +339,8 @@ def _is_table(text: str) -> bool:
             return True  # mostly tables.
     if txt.count("*") > 3 or txt.count("=") > 2:
         return True  # mostly catalogs and etc.
+    if text.find(' ... ') != -1:
+        return True
     
     return False
 
@@ -423,3 +423,11 @@ def _is_transcriber_notes(text: str) -> bool:
     if text in TRANSCRIBER_NOTES:
         return True
     return False
+
+def _is_diagram(text: str) -> bool:
+    if '+--' in text:
+        return True
+    if bool(re.search('(---+)', text)):
+        return True
+    return False
+        

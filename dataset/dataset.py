@@ -23,12 +23,16 @@ class StrategizedTokenizerDataset(torch.utils.data.Dataset):
     def populate(self, book_list = [16968, 1741]):
         
         #TODO make dynamic based on desired datasize
+        #Book list will change based on what is desired, current default is examplary.
         
         for book_id in book_list:
             if os.path.exists(os.path.join(self.datadir, str(book_id))):
                 saved_encodings = torch.load(os.path.join(self.datadir, str(book_id), "tensor_file.pt"))
                 self.encodings = {key: torch.cat((self.encodings[key], saved_encodings[key])) for key,val in saved_encodings.items() if key != 'labels'}
                 self.labels = torch.cat((self.labels, saved_encodings['labels']))
+            else:
+                raise FileExistsError("{} does not exist. ".format(os.path.join(self.datadir, str(book_id))))
+        print('Loaded books: ', book_list)
                 
                 
 class DefaultTokenizerDataset(torch.utils.data.Dataset):

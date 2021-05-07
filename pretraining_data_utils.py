@@ -14,20 +14,27 @@ from tqdm import tqdm
 
 import torch
 import os
+import pickle
+import spacy
 
 from tokenizer.tokenizer import StrategizedTokenizer
 
 
 def make_book_token_frequency(book_id_list: list):
+    '''
+    Takes in a list of book_ids which are valid ids for gutenberg.org, cleans every book using the supercleaner, and reports back how many tokens there will be remaining
+    '''
+    
     logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
     df = pd.DataFrame(columns=list(tokenizer.vocab))
     i = 0
-    for book in tqdm.tqdm(book_id_list):
+    for book in tqdm(book_id_list):
         text = super_cleaner(load_etext(int(book)), -1, verify_deletions=False, return_list=False)
         inputs = tokenizer(text,
-                   return_attention_mask=False, 
-                   return_token_type_ids=False,)
+                           add_special_tokens=False,
+                           return_attention_mask=False, 
+                           return_token_type_ids=False)
         token_freqs = np.bincount(inputs['input_ids'], minlength=len(tokenizer.vocab))
 
         df.loc[len(df)] = token_freqs
@@ -117,7 +124,7 @@ def optimize_book_subset_ratio(all_available_tokens, tokens_per_book, threshold:
         books_ratio = []
         
         for book_id in available_books:
-            if tokens_per_book[book_id]['total_tokens'] >= threshold - subset_total_tokens: #check if adding a book already exceeds values
+            if tokens_per_book[book_id]['total_tokens'] >= threshold - subset_total_tokens or tokens_per_book[book_id]['total_tokens'] == 0: #check if adding a book already exceeds values
                 available_books.remove(book_id) #remove book
             else:
                 books.append(book_id)
@@ -200,19 +207,16 @@ class BookWriter(object):
         
         if not os.path.exists(self.datadir):
             raise DatadirDoesNotExist('Given datadir does not exist')
+            
+        if self.overwrite not in [True, False, 'skip']:
+            raise ValueError("Argument 'overwrite' only accepts boolean values True, False or string 'skip'")
 
     def process_book(self, book_id: int):
-        if os.path.exists(path = os.path.join(self.datadir, str(book_id), "tensor_file.pt")):
-            if self.overwrite == 'skip':
-                return
-            elif self.overwrite == False:
-                raise FileExistsError('File already exists at {}. Use BookWriter(overwrite=True) if you want to overwrite existing files'.format(os.path.join(self.datadir, str(book_id), "tensor_file.pt")))
-
         sentences = super_cleaner(load_etext(int(book_id)), -1, verify_deletions=False)
-        print('Read book {}. Starting encoding'.format(book_id))
-        inputs = self.encode_book(sentences)
-        print('Encoded book {}. Starting saving'.format(book_id))
-        self.write_encoding_to_file(book_id, inputs)
+        print('Read book {}'.format(book_id))
+        self.write_sentences_to_file(book_id, sentences)
+        self.process_sentences_to_encoding_file(book_id, sentences)
+        print('Completed processing book {}'.format(book_id))
         
         
 
@@ -223,17 +227,91 @@ class BookWriter(object):
             inputs = {key: torch.cat((inputs[key], sentence_encoding[key])) for key,val in inputs.items()}
         
         return inputs
-        
-    def write_encoding_to_file(self, book_id, inputs):
+    
+    def write_sentences_to_file(self, book_id, sentences):
         directory = os.path.join(self.datadir, str(book_id))
-        path = os.path.join(self.datadir, str(book_id), "tensor_file.pt")
+        path = os.path.join(self.datadir, str(book_id), "sentences.pkl")
         if not os.path.exists(directory):
             os.makedirs(directory)
         elif os.path.exists(directory) and os.path.exists(path):
-            if self.overwrite == False:
+            if self.overwrite == True:
+                with open(os.path.join(self.datadir, str(book_id), 'sentences.pkl'), 'wb') as f:
+                    pickle.dump(sentences, f)        
+                    print('Saved sentences of book {} to {}.'.format(book_id, path))
+            elif self.overwrite == False:
+                raise FileExistsError('Sentences already exist at {}. Use BookWriter(overwrite=True) if you want to overwrite existing files'.format(path))
+            elif self.overwrite == 'skip':
+                print('sentences.pkl already exists for book {} at {}. Skipping save procedure'.format(book_id, path))
+                return
+        else:
+            with open(os.path.join(self.datadir, str(book_id), 'sentences.pkl'), 'wb') as f:
+                pickle.dump(sentences, f)        
+            print('Saved sentences of book {} to {}.'.format(book_id, path))
+            
+            
+    def process_sentences_to_encoding_file(self, book_id, sentences):
+        directory = os.path.join(self.datadir, str(book_id))
+        path = os.path.join(self.datadir, str(book_id), "tensor_file.pt")
+            
+        #check if file exists to prevent unnecessary processing
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        elif os.path.exists(directory) and os.path.exists(path):
+            if self.overwrite == True:
+                inputs = self.encode_book(sentences)
+                print('Encoded book {}. Starting saving encodings'.format(book_id))
+                torch.save(inputs, path)
+                print('Saved encodings of book {} to {}.'.format(book_id, path))
+            elif self.overwrite == False:
                 raise FileExistsError('File already exists at {}. Use BookWriter(overwrite=True) if you want to overwrite existing files'.format(path))
-        torch.save(inputs, path)
-        print('Saved book {} to {}.'.format(book_id, path))
+            elif self.overwrite == 'skip':
+                print('tensor_file.pt already exists for book {} at {}. Skipping save procedure'.format(book_id, path))
+                return
+        else:
+            inputs = self.encode_book(sentences)
+            print('Encoded book {}. Starting saving encodings'.format(book_id))
+            torch.save(inputs, path)
+            print('Saved encodings of book {} to {}.'.format(book_id, path))
+            
+            
+class SentenceChunker(object):
+    def __init__(self):
+        self.nlp = spacy.load("en_core_web_sm")
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    
+    def sentence_chunker(self, paragraph, max_seq_length=128, return_tokens=False, return_strings=True):
+        doc = self.nlp(paragraph)
+        split_paragraph = [sent.text for sent in doc.sents]
+        tokenized_sentences = self.tokenizer(split_paragraph,
+                                             add_special_tokens=False)['input_ids']
+        combined_tokens = [[]]
+        combined_sentences = ['']
+        for i, tokens in enumerate(tokenized_sentences):
+            if len(combined_tokens[-1]) + len(tokens) <= (max_seq_length - 2):
+                combined_tokens[-1] += tokens
+                if combined_sentences[-1].endswith('.') or combined_sentences[-1].endswith('?') or combined_sentences[-1].endswith('!'): #prevent stuff being concatenated on a dot
+                    combined_sentences[-1] += ' ' + split_paragraph[i]
+                else:
+                    combined_sentences[-1] += split_paragraph[i]
+            else:
+                combined_tokens[-1] += tokens
+                combined_sentences[-1] += split_paragraph[i]
+                if combined_sentences[-1].startswith('" '):
+                    combined_sentences[-1] = combined_sentences[-1].lstrip('" ')
+                    combined_tokens[-1] = combined_tokens[-1][1:]
+                combined_tokens.append([])
+                combined_sentences.append('')
+                
+        if return_tokens and return_strings:
+            return combined_tokens, combined_sentences
+        elif return_tokens:
+            return combined_tokens
+        elif return_strings:
+            return combined_sentences
+        
+                
+        
+        
         
 class Error(Exception):
     """Base class for other exceptions"""
