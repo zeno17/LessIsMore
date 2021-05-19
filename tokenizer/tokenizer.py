@@ -7,10 +7,8 @@ import re
 
 from transformers import BertTokenizer
 
-from transformers.tokenization_utils import PreTrainedTokenizer
-
-class StrategizedTokenizer(PreTrainedTokenizer):
-    def __init__(self, pos_based_mask=True, lemmatize=True, ner_based_swap=True, padding='max_length', truncation=True):
+class StrategizedTokenizer(object):
+    def __init__(self, pos_based_mask=True, lemmatize=True, ner_based_swap=True, padding='max_length', max_seq_length=128, truncation=True):
         """
         Constructs the strategized Tokenizer.
         Loads the required spacy model
@@ -19,18 +17,6 @@ class StrategizedTokenizer(PreTrainedTokenizer):
         
         ==Not guaranteed to work on cased vocabularies==
         """
-        super().__init__(
-            do_lower_case=True,
-            do_basic_tokenize=True,
-            never_split=None,
-            unk_token="[UNK]",
-            sep_token="[SEP]",
-            pad_token="[PAD]",
-            cls_token="[CLS]",
-            mask_token="[MASK]",
-            tokenize_chinese_chars=True,
-            strip_accents=None,
-        )
         
         self.nlp = spacy.load("en_core_web_sm")
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -38,6 +24,7 @@ class StrategizedTokenizer(PreTrainedTokenizer):
         self.lemmatize = lemmatize
         self.ner_based_swap = ner_based_swap
         self.padding = padding
+        self.max_seq_length = max_seq_length
         self.truncation=truncation
        
 
@@ -57,12 +44,14 @@ class StrategizedTokenizer(PreTrainedTokenizer):
                                 return_token_type_ids=False, #Dont need this because we dont use NSP
                                 return_tensors="pt", 
                                 padding=self.padding,
+                                max_length=self.max_seq_length,
                                 truncation=self.truncation)
         inputs['labels'] = self.tokenizer([text for i in range(0,len(processed_text_list))], 
                                           return_attention_mask=False, 
                                           return_token_type_ids=False,
                                           return_tensors='pt', 
                                           padding=self.padding,
+                                          max_length=self.max_seq_length,
                                           truncation=self.truncation)['input_ids']
         return inputs
     
@@ -106,11 +95,12 @@ class StrategizedTokenizer(PreTrainedTokenizer):
     def lemmatize_text(self, text, spacy_sentence) -> list:
         #avoid unnecessary replacements. parenthesis break regex, just avoid all together.
         replacement_tuples = [(token.text, token.lemma_) for token in spacy_sentence \
-                              if token.text.lower() != token.lemma_ and token.text != token.lemma_ and \
-                                  not '(' in token.text and not ')' in token.text] 
+                              if token.text.lower() != token.lemma_ and token.text != token.lemma_] 
         lemmatized_text = text
-        for replacement in replacement_tuples:
-            lemmatized_text = re.sub(r'\b' + replacement[0] + r'\b', replacement[1], lemmatized_text)
+        for replacement in replacement_tuples: #account for literal signs in regex
+            lemmatized_text = re.sub(r'\b' + \
+                                     replacement[0].replace('(', '\(').replace(')', '\)').replace('[', '\[').replace(']', '\]') + \
+                                     r'\b', replacement[1], lemmatized_text)
 
         lemmatized_text = lemmatized_text.replace("  ", " ")
         return [lemmatized_text]

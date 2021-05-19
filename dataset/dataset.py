@@ -7,10 +7,11 @@ import torch
 import os
 
 class StrategizedTokenizerDataset(torch.utils.data.Dataset):
-    def __init__(self, datadir='../pretraining_data'):
+    def __init__(self, datadir='../pretraining_data', max_seq_length=8):
         self.encodings = {key: torch.tensor([], dtype=torch.long)  for key in ['input_ids', 'attention_mask']}
         self.labels = torch.tensor([], dtype=torch.long)
         self.datadir = datadir
+        self.max_seq_length = max_seq_length
 
     def __getitem__(self, idx):
         item = {key: val[idx].long() for key, val in self.encodings.items()}
@@ -21,20 +22,17 @@ class StrategizedTokenizerDataset(torch.utils.data.Dataset):
         return len(self.labels)
     
     def populate(self, book_list = [16968, 1741]):
-        
-        #TODO make dynamic based on desired datasize
-        #Book list will change based on what is desired, current default is examplary.
-        
         for book_id in book_list:
             if os.path.exists(os.path.join(self.datadir, str(book_id))):
-                saved_encodings = torch.load(os.path.join(self.datadir, str(book_id), "tensor_file.pt"))
+                saved_encodings = torch.load(os.path.join(self.datadir, str(book_id), "tensors_" + str(self.max_seq_length) + ".pt"))
                 self.encodings = {key: torch.cat((self.encodings[key], saved_encodings[key])) for key,val in saved_encodings.items() if key != 'labels'}
                 self.labels = torch.cat((self.labels, saved_encodings['labels']))
             else:
                 raise FileExistsError("{} does not exist. ".format(os.path.join(self.datadir, str(book_id))))
-        print('Loaded books: ', book_list)
+        print(self.max_seq_length, 'Loaded books: ', book_list)
                 
-                
+
+
 class DefaultTokenizerDataset(torch.utils.data.Dataset):
     def __init__(self, datadir='../pretraining_data'):
         self.encodings = {key: torch.tensor([], dtype=torch.long)  for key in ['input_ids', 'attention_mask']}
