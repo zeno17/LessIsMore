@@ -2,15 +2,18 @@
 
 
 from dataset.dataset import StrategizedTokenizerDataset
+from dataset.dataset import DefaultTokenizerDataset
 
 from transformers import BertConfig
 from transformers import BertForMaskedLM
+from transformers import BertTokenizer
 from transformers import Trainer, TrainingArguments
+from transformers.data.data_collator import DataCollatorForWholeWordMask
+
 
 import argparse
 import os
 import pickle
-import logging
 
 def bert_tiny_config():
     """Config parameters for BERT-tiny"""
@@ -53,7 +56,10 @@ def train_model(args, trial):
     train_batch_size = args.train_batch_size
     config = args.model_config
     training_method = args.training_method
-    
+    steps_distribution = args.steps_distribution
+    print(steps_distribution)
+    if isinstance(steps_distribution, str):
+        steps_distribution = [int(x) for x in args.steps_distribution.strip('[').strip(']').split(',')]
     
     ####
     # Build model
@@ -81,13 +87,14 @@ def train_model(args, trial):
         book_list = book_file
     
     
+    model_dir = os.path.join(output_dir, str(trial))
         
     if training_method == 'standard':
         split_sizes = [8, 32, 128]
-        steps_distribution = [3, 3, 4]
+        steps_distribution = steps_distribution
         batch_size_multiplier = [16, 4, 1]
         
-        model_dir = os.path.join(output_dir, str(trial))
+        
         for i, length in enumerate(split_sizes):
             train_dataset = StrategizedTokenizerDataset(datadir=data_dir, max_seq_length=length)
             train_dataset.populate(book_list=book_list)
@@ -97,15 +104,46 @@ def train_model(args, trial):
                 overwrite_output_dir=True,
                 save_strategy='no',
                 
-                
                 #Training params we picked because of training strategy
                 max_steps = steps_distribution[i],
                 per_device_train_batch_size=train_batch_size*batch_size_multiplier[i],  
                 #num_train_epochs=3 # For if you want run epochs instead of steps
                 
-                # directory for storing logs
-                logging_dir='./logs',
-                logging_steps=1,
+                #Hyper parameters as per BERT-paper which are not default values in TrainingArguments
+                warmup_ratio=0.1,
+                learning_rate=1e-4,
+                weight_decay=0.01
+            )
+            
+            trainer = Trainer(
+                model=model,                         # the instantiated 🤗 Transformers model to be trained
+                args=training_args,                  # training arguments, defined above
+                train_dataset=train_dataset,         # training dataset
+                eval_dataset=None                    # evaluation dataset
+            )
+            
+            
+            trainer.train()
+        
+        trainer.save_model(model_dir)
+    elif training_method == 'single_length':
+        split_sizes = [128]
+        steps_distribution = [sum(steps_distribution)]
+        batch_size_multiplier = [1]
+        
+        for i, length in enumerate(split_sizes):
+            train_dataset = StrategizedTokenizerDataset(datadir=data_dir, max_seq_length=length)
+            train_dataset.populate(book_list=book_list)
+            
+            training_args = TrainingArguments(
+                output_dir=model_dir,
+                overwrite_output_dir=True,
+                save_strategy='no',
+                
+                #Training params we picked because of training strategy
+                max_steps = steps_distribution[i],
+                per_device_train_batch_size=train_batch_size*batch_size_multiplier[i],  
+                #num_train_epochs=3 # For if you want run epochs instead of steps
                 
                 #Hyper parameters as per BERT-paper which are not default values in TrainingArguments
                 warmup_ratio=0.1,
@@ -125,13 +163,47 @@ def train_model(args, trial):
         
         trainer.save_model(model_dir)
         
-    elif training_method == 'something_else':
-        pass
-    
     elif training_method == 'original_bert':
-        pass
-    
+        split_sizes = [8, 32, 128]
+        steps_distribution = steps_distribution
+        batch_size_multiplier = [16, 4, 1]
         
+        tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        data_collator = DataCollatorForWholeWordMask(tokenizer=tokenizer, 
+                                                                     mlm=True, 
+                                                                     mlm_probability=0.15)
+        for i, length in enumerate(split_sizes):
+            train_dataset = DefaultTokenizerDataset(datadir=data_dir, max_seq_length=length)
+            train_dataset.populate(book_list=book_list)        
+        
+            training_args = TrainingArguments(
+                output_dir=model_dir,
+                overwrite_output_dir=True,
+                save_strategy='no',
+                
+                #Training params we picked because of training strategy
+                max_steps = steps_distribution[i],
+                per_device_train_batch_size=train_batch_size*batch_size_multiplier[i],  
+                #num_train_epochs=3 # For if you want run epochs instead of steps
+                
+                #Hyper parameters as per BERT-paper which are not default values in TrainingArguments
+                warmup_ratio=0.1,
+                learning_rate=1e-4,
+                weight_decay=0.01
+            )
+            
+            trainer = Trainer(
+                model=model,                         # the instantiated 🤗 Transformers model to be trained
+                args=training_args,                  # training arguments, defined above
+                tokenizer=tokenizer,
+                data_collator=data_collator,
+                train_dataset=train_dataset,         # training dataset
+                eval_dataset=None                    # evaluation dataset
+            )
+            
+            trainer.train()
+        
+        trainer.save_model(model_dir)
     
     
     
@@ -159,6 +231,10 @@ def main():
                         default=1,
                         type=int,
                         help='How many runs to perform')
+    parser.add_argument('--steps-distribution', required=False,
+                         default=[30000, 30000, 40000],
+                         type=str,
+                         help='How to split steps across 3 different sizes (8/32/128) or how many steps for single length. Coerces with standard')
     
     args = parser.parse_args()
     

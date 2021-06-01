@@ -163,6 +163,8 @@ class SentenceWriter(object):
 
     def process_book(self, book_id):
         split_sentences = self.make_data_splits(int(book_id), max_seq_lengths=self.split_sizes, truncate=self.truncate)
+        if split_sentences == None: # Deal with return of None from make_data_splits incase there are no sentences from the book
+            return
         for length, sentences in split_sentences.items():
             Path(self.datadir, str(book_id)).mkdir(parents=True, exist_ok=True)
             with open(os.path.join(self.datadir, str(book_id), 'sentences_' + str(length) + '.pkl'), 'wb') as f:
@@ -247,7 +249,11 @@ class SentenceChunker(object):
                     combined_tokens[-1] = combined_tokens[-1][1:]
                 combined_tokens.append([])
                 combined_sentences.append('')
-                
+        
+        combined_tokens = [combined_tokens[i] for i in range(0, len(combined_sentences)) if combined_sentences[i] != ''] #first filter out tokens list
+        combined_sentences = [sentence for sentence in combined_sentences if sentence != ''] #then filter out combined sentences
+        
+        
         if return_tokens and return_strings:
             return combined_tokens, combined_sentences
         elif return_tokens:
