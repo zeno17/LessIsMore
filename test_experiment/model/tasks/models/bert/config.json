@@ -1,5 +1,0 @@
-{
-  "hf_pretrained_model_name_or_path": "./test_experiment/model",
-  "model_path": "./test_experiment/model/tasks\\models\\bert\\model\\model.p",
-  "model_config_path": "./test_experiment/model/tasks\\models\\bert\\model\\config.json"
-}

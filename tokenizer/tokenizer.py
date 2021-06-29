@@ -113,7 +113,11 @@ class StrategizedTokenizer(object):
                 time_substring.reverse()
                 ner_swapped_text = ner_swapped_text.replace(ner_swapped_text[ent.start_char:ent.end_char], " ".join(time_substring))
             #TODO add other possible ideas
-        return [ner_swapped_text]
+        
+        if ner_swapped_text == spacy_sentence.text:
+            return []
+        else:
+            return [ner_swapped_text]
         
     def convert_ids_to_tokens(self, input_ids):
         return [self.tokenizer.convert_ids_to_tokens(row) for row in input_ids]

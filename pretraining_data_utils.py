@@ -157,6 +157,7 @@ class SentenceWriter(object):
         self.datadir = datadir
         self.truncate = truncate
         self.split_sizes = split_sizes
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         
         if not os.path.exists(self.datadir):
             raise DatadirDoesNotExist('Given datadir does not exist')
@@ -179,7 +180,7 @@ class SentenceWriter(object):
         32: ['That is definitely a good thing but couldn't he have told us earlier? Now we are late once again.],
         128: ['<some very long sequence>']}
         '''
-        tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        
         text_splits = {key: [] for key in max_seq_lengths}
         
         max_position_length = max(max_seq_lengths)
@@ -188,10 +189,10 @@ class SentenceWriter(object):
         
         if len(paragraphs) == 0:
             return
-        paragraphs_tokens = tokenizer(paragraphs.tolist(),
-                                      add_special_tokens=True,
-                                      truncation=False,
-                                      return_tensors='np')['input_ids']
+        paragraphs_tokens = self.tokenizer(paragraphs.tolist(),
+                                           add_special_tokens=True,
+                                           truncation=False,
+                                           return_tensors='np')['input_ids']
         max_seq_lengths = [0] + max_seq_lengths
         
         length_tuples = [(max_seq_lengths[i], max_seq_lengths[i+1]) for i in range(0, len(max_seq_lengths)-1)]
@@ -207,7 +208,7 @@ class SentenceWriter(object):
             text_splits[max_position_length] += paragraphs[idx_too_long].tolist()
         
         elif truncate == 'chunk':
-            SC = SentenceChunker()
+            SC = SentenceChunker(tokenizer=self.tokenizer)
             #Turn the sentences into chunks using SentenceChunker
             for i, sentence in enumerate(paragraphs[idx_too_long]):    
                 new_sents = SC.sentence_chunker(str(sentence), max_position_length)        
@@ -222,10 +223,9 @@ class SentenceChunker(object):
     e.g. a sequence of 300 tokens may get chunked into a pair of sequences with length 170 and 128.
     It corrects for adding the special tokens.
     '''
-    def __init__(self):
+    def __init__(self, tokenizer):
         self.nlp = spacy.load("en_core_web_sm")
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        
+        self.tokenizer = tokenizer
     
     def sentence_chunker(self, paragraph, max_seq_length=128, return_tokens=False, return_strings=True):
         doc = self.nlp(paragraph.strip())

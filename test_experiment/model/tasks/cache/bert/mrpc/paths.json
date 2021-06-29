@@ -1,6 +1,0 @@
-{
-  "train": "./test_experiment/model/tasks\\cache\\bert\\mrpc\\train",
-  "val": "./test_experiment/model/tasks\\cache\\bert\\mrpc\\val",
-  "val_labels": "./test_experiment/model/tasks\\cache\\bert\\mrpc\\val_labels",
-  "test": "./test_experiment/model/tasks\\cache\\bert\\mrpc\\test"
-}

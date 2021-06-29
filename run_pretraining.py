@@ -11,6 +11,7 @@ from transformers import Trainer, TrainingArguments
 from transformers.data.data_collator import DataCollatorForWholeWordMask
 
 
+from datetime import datetime
 import argparse
 import os
 import pickle
@@ -96,9 +97,10 @@ def train_model(args, trial):
         
         
         for i, length in enumerate(split_sizes):
+            print('Loading dataset with length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
             train_dataset = StrategizedTokenizerDataset(datadir=data_dir, max_seq_length=length)
             train_dataset.populate(book_list=book_list)
-            
+            print('Loaded dataset with length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
             training_args = TrainingArguments(
                 output_dir=model_dir,
                 overwrite_output_dir=True,
@@ -124,17 +126,20 @@ def train_model(args, trial):
             
             
             trainer.train()
-        
+            
+            print('Finished training with dataset of length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
         trainer.save_model(model_dir)
+        
     elif training_method == 'single_length':
         split_sizes = [128]
         steps_distribution = [sum(steps_distribution)]
         batch_size_multiplier = [1]
         
         for i, length in enumerate(split_sizes):
+            print('Loading dataset with length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
             train_dataset = StrategizedTokenizerDataset(datadir=data_dir, max_seq_length=length)
             train_dataset.populate(book_list=book_list)
-            
+            print('Loaded dataset with length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
             training_args = TrainingArguments(
                 output_dir=model_dir,
                 overwrite_output_dir=True,
@@ -160,7 +165,8 @@ def train_model(args, trial):
             
             
             trainer.train()
-        
+            print('Finished training with dataset of length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
+            
         trainer.save_model(model_dir)
         
     elif training_method == 'original_bert':
@@ -173,9 +179,10 @@ def train_model(args, trial):
                                                                      mlm=True, 
                                                                      mlm_probability=0.15)
         for i, length in enumerate(split_sizes):
+            print('Loading dataset with length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
             train_dataset = DefaultTokenizerDataset(datadir=data_dir, max_seq_length=length)
             train_dataset.populate(book_list=book_list)        
-        
+            print('Loaded dataset with length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
             training_args = TrainingArguments(
                 output_dir=model_dir,
                 overwrite_output_dir=True,
@@ -202,8 +209,11 @@ def train_model(args, trial):
             )
             
             trainer.train()
+            print('Finished training with dataset of length {} at time {}'.format(length, datetime.now().strftime("%H:%M:%S")))
         
         trainer.save_model(model_dir)
+    
+    print('Finished training and stored model to {}').format(model_dir)
     
     
     

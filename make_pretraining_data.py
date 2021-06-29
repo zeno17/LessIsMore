@@ -11,7 +11,14 @@ import argparse
 import os
 import pickle
 
-
+def parse_str_to_bool(argument: str) -> bool:
+    if argument == 'False':
+        return False
+    elif argument == 'True':
+        return True
+    else:
+        raise ValueError('parameter <argument> must be either "False" or "True"')
+        
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", required=True,
@@ -24,17 +31,18 @@ def main():
                         help='Whether or not to truncate sentences')
     parser.add_argument("--split-sizes", type=str,
                         help="What sizes to split the data in if neccessary")
-    parser.add_argument("--pos-based-mask", type=bool,
-                        default=True,
+    parser.add_argument("--pos-based-mask", 
+                        type=str,
+                        default="True",
                         help='Whether to add the POS-based mask to sentence writer')
-    parser.add_argument("--lemmatize", type=bool,
-                        default=True,
+    parser.add_argument("--lemmatize", 
+                        type=str,
+                        default="True",
                         help='Whether to add the lemmatizer mask to sentence writer')
-    parser.add_argument("--ner-based-swap", type=bool,
-                        default=True,
+    parser.add_argument("--ner-based-swap", 
+                        type=str,
+                        default="True",
                         help='Whether to add the ner-based swap mask to sentence writer')
-
-    
     
     args = parser.parse_args()
     
@@ -43,10 +51,10 @@ def main():
     book_id_file = args.book_id_file
     truncation = args.truncation
 
-    pos_based_mask = args.pos_based_mask
-    lemmatize = args.lemmatize
-    ner_based_swap = args.ner_based_swap
-
+    pos_based_mask = parse_str_to_bool(args.pos_based_mask)
+    lemmatize = parse_str_to_bool(args.lemmatize)
+    ner_based_swap = parse_str_to_bool(args.ner_based_swap)
+    
     split_sizes = [int(x) for x in args.split_sizes.strip('[').strip(']').split(',')]
         
     sentencewriter = SentenceWriter(datadir=data_dir, truncate=truncation, split_sizes=split_sizes)
